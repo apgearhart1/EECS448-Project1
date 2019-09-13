@@ -74,15 +74,25 @@ def trackRects(rects):
     newPress = True
     mouseX = 0
     mouseY = 0
+    rects_clicked = []
 
     if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
         newPress = False
         mouseX, mouseY = pygame.mouse.get_pos()
         for i in range(0, 8):
             for j in range(0, 8):
-                if isPointInRect(mouseX, mouseY, rects[i][j]):
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and not rects[i][j] in rects_clicked:
+                    rects_clicked.append(rects[i][j])
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
+                    print(rects_clicked)
+                elif isPointInRect(mouseX, mouseY, rects[i][j]) and rects[i][j] in rects_clicked:
+                    rects_clicked.remove(rects[i][j])
+                    pygame.draw.rect(disp, (12, 12, 12), rects[i][j])
+                    pygame.display.update(rects[i][j])
+                    print(rects_clicked)
+
+
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
