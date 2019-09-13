@@ -10,9 +10,13 @@ disp_width = 1080
 disp_height = 720
 
 disp = pygame.display.set_mode((disp_width, disp_height))
-disp.fill((255, 255, 255))
+disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
 
+rects_clicked=[]
+rects_missed = []
+rects_hit = []
+ship_square = [(233, 233, 33, 33), (267, 233, 33, 33 ), (301, 233, 33, 33), (470, 470, 33, 33), (470, 436, 33, 33), (470, 402, 33, 33), (301, 368, 33, 33), (335, 368, 33, 33)]
 
 def event_handler():
     """Checks for different pygame events"""
@@ -40,7 +44,7 @@ def isPointInRect(x, y, rect):
 
 def createRects(x, y):
     """Creates an 8x8 grid of squares
-    
+
     Args:
     x (int): the x position for the top right corner of the grid to start at
     y (int): the y position for the top right corner of the grid to start at
@@ -52,7 +56,7 @@ def createRects(x, y):
     interval = (disp_width / 2) / 16
     divX = interval + x
     divY = interval + y
-    rects = [[0 for x in range(8)] for y in range(8)] 
+    rects = [[0 for x in range(8)] for y in range(8)]
     for i in range(0, 8):
         for j in range(0, 8):
             rects[i][j] = pygame.Rect(divX, divY, interval, interval)
@@ -71,28 +75,30 @@ def trackRects(rects):
         rects (8x8 array of pygame.Rect objects): the grid to check on
     """
 
+
     newPress = True
     mouseX = 0
     mouseY = 0
-    rects_clicked = []
+
 
     if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
         newPress = False
         mouseX, mouseY = pygame.mouse.get_pos()
         for i in range(0, 8):
             for j in range(0, 8):
-                if isPointInRect(mouseX, mouseY, rects[i][j]) and not rects[i][j] in rects_clicked:
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and rects[i][j] in ship_square and not rects[i][j] in rects_clicked:
+                    rects_hit.append(rects[i][j])
                     rects_clicked.append(rects[i][j])
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked)
-                elif isPointInRect(mouseX, mouseY, rects[i][j]) and rects[i][j] in rects_clicked:
-                    rects_clicked.remove(rects[i][j])
-                    pygame.draw.rect(disp, (12, 12, 12), rects[i][j])
+                elif isPointInRect(mouseX, mouseY, rects[i][j]) and not rects[i][j] in rects_clicked:
+                    rects_missed.append(rects[i][j])
+                    rects_clicked.append(rects[i][j])
+                    pygame.draw.rect(disp, (0, 0, 255), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked)
-
-
+        pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
