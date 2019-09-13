@@ -92,6 +92,12 @@ def trackRects(rects):
                     pygame.display.update(rects[i][j])
                     print(rects_clicked)
 
+
+
+    elif pygame.mouse.get_pressed() != (1, 0, 0):
+        newPress = True
+
+
 leftGrid = createRects(200, 200)
 rightGrid = createRects(500, 200)
 
