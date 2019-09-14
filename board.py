@@ -4,6 +4,11 @@ class board:
         self.hits = [[]]
         self.misses = [[]]
     def isMiss(xPos, yPos):
+        if(self.misses[xPos][yPos] == True){
+            return True
+        }
+        return False
+    def isHitt(xPos, yPos):
         if(self.hits[xPos][yPos] == True){
             return True
         }
