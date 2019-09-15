@@ -7,9 +7,9 @@ class Player:
 		# this player's list of ships
 		self.shipList = [] 
 		# this player's board
-		self.myBoard = myBoard
+		self.myBoard = myBoard(8,8)
 		# opponent's board		
-		self.theirBoard = theirBoard 
+		self.theirBoard = theirBoard(8,8)
 
 	def shipsDestroyed(self):
 		counter = 0
@@ -31,7 +31,7 @@ class Player:
 		# creates a new ship
 		tempShip = boat(length, location)
 		
-		if tempShip.validPlace(self, length, location):
+		if tempShip.validPlace(length, location):
 			self.shipList.append(tempShip)
 			# place ship on board here
 			return True
