@@ -2,6 +2,7 @@ class board:
     def __init__(self, rowSize, colSize):
         self.rowSize = rowSize
 		self.colSize = colSize
+		self.boardStorage = [[0 for y in range(colSize)] for x in range(rowSize)]
         self.hits = [[]]
         self.misses = [[]]
 		
