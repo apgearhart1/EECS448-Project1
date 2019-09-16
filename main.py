@@ -13,6 +13,8 @@ disp = pygame.display.set_mode((disp_width, disp_height))
 disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
 
+gameState = "gamePlay"
+
 rects_clicked=[]
 rects_missed = []
 rects_hit = []
@@ -103,10 +105,20 @@ def trackRects(rects):
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
 
-
-leftGrid = createRects(200, 200)
-rightGrid = createRects(500, 200)
+if gameState == "welcome":
+    pass
+elif gameState == "placeBoats":
+    pass
+elif gameState == "gamePlay":
+    leftGrid = createRects(200, 200)
+    rightGrid = createRects(500, 200)
 
 while True:
     event_handler()
-    trackRects(leftGrid)
+
+    if gameState == "welcome":
+        pass
+    elif gameState == "placeBoats":
+        pass
+    elif gameState == "gamePlay":
+        trackRects(leftGrid)
