@@ -13,7 +13,7 @@ disp = pygame.display.set_mode((disp_width, disp_height))
 disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
 
-gameState = "gamePlay"
+gameState = "welcome"
 
 rects_clicked=[]
 rects_missed = []
@@ -70,6 +70,10 @@ def createRects(x, y):
     pygame.display.update()
     return rects
 
+def text_objects(text, font): #function used from https://pythonprogramming.net/pygame-start-menu-tutorial/
+    textSurface = font.render(text, True, white)
+    return textSurface, textSurface.get_rect()
+
 def trackRects(rects):
     """Tracks when a single square in a grid is pressed by the mouse
 
@@ -106,7 +110,17 @@ def trackRects(rects):
         newPress = True
 
 if gameState == "welcome":
-    pass
+    l_blue = (80, 171, 250)
+    white = (255, 255, 255)
+    gameDisplay = pygame.display.set_mode((disp_width,disp_height))
+    pygame.display.set_caption('Battleboats')
+    clock = pygame.time.Clock()
+    gameDisplay.fill(l_blue)
+    largeText = pygame.font.Font('freesansbold.ttf',65)
+    TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
+    TextRect.center = ((disp_width/2),(disp_height/4))
+    gameDisplay.blit(TextSurf, TextRect)
+    pygame.display.update()
 elif gameState == "placeBoats":
     pass
 elif gameState == "gamePlay":
