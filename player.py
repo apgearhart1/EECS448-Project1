@@ -28,11 +28,15 @@ class Player:
 		
 		if tempShip.validPlace(length, location):
 			self.shipList.append(tempShip)
-			# self.myBoard.place(x,y)
+			self.myBoard.place(location)
 			return True			
 		else:
 			#print("Invalid placement")
 			return False
+			
+	def getShipList()
+		return self.shipList
+	
 		
 			
 		
