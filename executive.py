@@ -15,9 +15,9 @@ class Executive:
 			print("Select number of boats (1-5)")
 			num = input()
 			if num > 0 and num < 6:
-				for i in range(num):
+				for i in range(1,num):
 					self.player1.placeShip(i)
-				for j in range(num):
+				for j in range(1,num):
 					self.player2.placeShip(j)
 				check = True
 			else:
