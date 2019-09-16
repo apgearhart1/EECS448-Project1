@@ -34,8 +34,11 @@ class Player:
 			#print("Invalid placement")
 			return False
 			
-	def getShipList()
+	def getShipList(self):
 		return self.shipList
+		
+	def getShip(self, index):
+		return self.shipList[index]
 	
 		
 			
