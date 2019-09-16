@@ -28,7 +28,7 @@ class board:
 		b = [[0 for y in range(8)] for x in range(8)]
 		print(b)
 
-    def isBoat(xPos, yPos):
+    def isBoat(self, xPos, yPos):
         if(self.boardStorage[xPos][yPos] == 1):
             return True
         return False
