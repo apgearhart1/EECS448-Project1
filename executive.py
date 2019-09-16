@@ -1,6 +1,6 @@
-#from player import Player
-#from boat import boat
-#from board import board
+from player import Player
+from boat import boat
+from board import board
 
 class Executive:
 
@@ -9,7 +9,7 @@ class Executive:
 		self.player2 = Player()
 		self.turns = 1
 	
-	def select(self):	
+	def selectBoats(self):	
 		check = False
 		while not check:
 			print("Select number of boats (1-5)")
@@ -36,14 +36,13 @@ class Executive:
 		if self.playerTurn() == "player1":
 			#check where the player clicks here 
 			#location = where the player clicks
-			tempShipList = self.player2.getShipList()
-			for i in tempShipList:
+			for i in self.player2.getShipList():
 				if self.player2.getShip(i).getcoordinates() == location:
-					self.player2.getShip(i).hit(location)
+					print(self.player2.getShip(i).hit(location))
+					
 		elif self.playerTurn() == "player2":
-			tempShipList = self.player1.getShipList()
-			for i in tempShipList:
+			for i in self.player1.getShipList():
 				if self.player1.getShip(i).getcoordinates() == location:
-					self.player1.getShip(i).hit(location)
+					print(self.player1.getShip(i).hit(location))
 					
 			
