@@ -1,5 +1,5 @@
-class boat:
-    def __init__(self, size, coordinates):
+class Boat:
+    def __init__(self, size=1, coordinates=[]):
         self.size = size
         self.coordinates = coordinates
         self.destroyed = False

@@ -1,8 +1,7 @@
 import pygame
 import pygame.gfxdraw
 from pygame.locals import *
-import random
-
+from boats import Boat
 
 pygame.init()
 
@@ -13,7 +12,14 @@ disp = pygame.display.set_mode((disp_width, disp_height))
 disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
 
-gameState = "welcome"
+gameState = "placeBoats1"
+numberOfBoats = 4
+placeNumber = 1
+spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
+
+grid = None
+leftGrid = None
+rightGrid = None
 
 def event_handler():
     """Checks for different pygame events"""
@@ -85,14 +91,9 @@ def trackRects(rects):
         rects (8x8 array of pygame.Rect objects): the grid to check on
     """
 
-
     newPress = True
     mouseX = 0
-
-
-
     mouseY = 0
-
 
     if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
         newPress = False
@@ -146,6 +147,41 @@ def clear_board(rects):
             pygame.draw.rect(disp, (192, 192, 192), rects[i][j])
             pygame.display.update(rects[i][j])
 
+def trackPlacement(rects):
+    global placeNumber
+    global spotsToCheck
+
+    newPress = True
+    mouseX = 0
+    mouseY = 0
+
+    if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
+        newPress = False
+        mouseX, mouseY = pygame.mouse.get_pos()
+        for i in range(0, 8):
+            for j in range(0, 8):
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and [j, i] not in spotsToCheck:
+                    spotsToCheck.append([j, i])
+                    pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
+                    pygame.display.update(rects[i][j])
+
+        #pygame.time.delay(250)
+
+    elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) != 0:
+        newPress = True
+        print(spotsToCheck)
+        B = Boat()
+        if B.validPlace(spotsToCheck):
+            print("Boat Placed")
+        else:
+            print("Error placing boat")
+            for i in spotsToCheck:
+                pygame.draw.rect(disp, (192, 192, 192), rects[i[1]][i[0]])
+                pygame.draw.rect(disp, (0, 0, 0), rects[i[1]][i[0]], 2)
+                pygame.display.update(rects[i[1]][i[0]])
+
+        spotsToCheck = []
+
 if gameState == "welcome":
     l_blue = (80, 171, 250)
     white = (255, 255, 255)
@@ -180,8 +216,16 @@ if gameState == "welcome":
     gameDisplay.blit(TextSurf2, TextRect2)
     gameDisplay.blit(TextSurf3, TextRect3)
     pygame.display.update()
-elif gameState == "placeBoats":
-    pass
+
+elif gameState == "placeBoats1":
+    font = pygame.font.SysFont("Times New Roman", 30)
+    text = font.render("Player 1, Place your " + str(numberOfBoats) + " boats", True, (0, 128, 0))
+    disp.blit(text, (350, 100))
+
+    grid = createRects(350, 200)
+
+    pygame.display.update()
+
 elif gameState == "gamePlay":
     disp_width = 1080
     disp_height = 720
@@ -207,8 +251,15 @@ while True:
     event_handler()
     if gameState == "welcome":
         pass
-    elif gameState == "placeBoats":
-        pass
+
+    elif gameState == "placeBoats1":
+        if placeNumber <= numberOfBoats:
+            font = pygame.font.SysFont("Times New Roman", 20)
+            text = font.render("Boat to place: " + str(placeNumber) + "x" + str(placeNumber), True, (0, 128, 0))
+            disp.blit(text, (350, 135))
+
+            trackPlacement(grid)
+
     elif gameState == "gamePlay":
         trackRects(leftGrid)
         track_toggle()
