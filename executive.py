@@ -1,5 +1,5 @@
 from player import Player
-from boat import boat
+from boats import boat
 from board import board
 
 class Executive:
