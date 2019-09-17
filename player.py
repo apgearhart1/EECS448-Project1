@@ -6,6 +6,7 @@ class Player:
 	def __init__(self):
 		# this player's ships
 		self.shipList = [] 
+		self.shipCoordinateList = []
 		# this player's board
 		self.myBoard = myBoard(8,8)
 		# opponent's board		
@@ -28,6 +29,7 @@ class Player:
 		
 		if tempShip.validPlace(length, location):
 			self.shipList.append(tempShip)
+			self.shipCoordinateList.append(location)
 			self.myBoard.place(location)
 			return True			
 		else:
@@ -39,7 +41,9 @@ class Player:
 		
 	def getShip(self, index):
 		return self.shipList[index]
-	
+		
+	def getCoordinateList(self)
+		return self.shipCoordinateList 
 		
 			
 		
