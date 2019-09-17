@@ -112,14 +112,36 @@ def trackRects(rects):
 if gameState == "welcome":
     l_blue = (80, 171, 250)
     white = (255, 255, 255)
+    black = (0,0,0)
     gameDisplay = pygame.display.set_mode((disp_width,disp_height))
     pygame.display.set_caption('Battleboats')
     clock = pygame.time.Clock()
     gameDisplay.fill(l_blue)
     largeText = pygame.font.Font('freesansbold.ttf',65)
     TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
+    medText = pygame.font.Font('freesansbold.ttf', 48)
+    smallText = pygame.font.Font('freesansbold.ttf', 36)
+    TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
+    TextSurf2, TextRect2 = text_objects("Play", medText)
+    TextSurf3, TextRect3 = text_objects("Quit", medText)
+    TextRect.center = ((disp_width/2),(disp_height/4))
+    TextRect2.center = ((disp_width/2), (disp_height/2))
+    TextRect3.center = ((disp_width/2), (disp_height*.75))
+    #makes buttons interactive
+    mouse = pygame.mouse.get_pos()
+    if disp_width*.45 + 100 > mouse[0] > disp_width*.45 and disp_height*.43 + 50 > mouse[1] > disp_height*.43:
+        pygame.draw.rect(gameDisplay, white ,(disp_width*.45,disp_height*.43,120,75))
+    elif disp_width*.45 + 100 > mouse[0] > disp_width*.45 and disp_height*.68 + 50 > mouse[1] > disp_height*.68:
+        pygame.draw.rect(gameDisplay, white ,(disp_width*.45,disp_height*.68,120,75))
+    else:
+        pygame.draw.rect(gameDisplay, l_blue ,(disp_width*.45,disp_height*.43,120,75))
+        pygame.draw.rect(gameDisplay, l_blue ,(disp_width*.45,disp_height*.68,120,75))
+        pygame.draw.rect(gameDisplay, black,(disp_width*.45,disp_height*.43,120,75),5)
+        pygame.draw.rect(gameDisplay, black,(disp_width*.45,disp_height*.68,120,75),5)
     TextRect.center = ((disp_width/2),(disp_height/4))
     gameDisplay.blit(TextSurf, TextRect)
+    gameDisplay.blit(TextSurf2, TextRect2)
+    gameDisplay.blit(TextSurf3, TextRect3)
     pygame.display.update()
 elif gameState == "placeBoats":
     pass
