@@ -13,7 +13,7 @@ disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
 clock = pygame.time.Clock()
 
-gameState = "placeBoats1"
+gameState = "welcome"
 numberOfBoats = 4
 placeNumber = 1
 spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
@@ -22,13 +22,16 @@ grid = None
 leftGrid = None
 rightGrid = None
 
+def quitGame():
+    pygame.quit()
+    quit()
+
 def event_handler():
     """Checks for different pygame events"""
 
     for event in pygame.event.get():
         if event.type == QUIT or ( event.type == KEYDOWN and ( event.key == K_ESCAPE or event.key == K_q)):
-            pygame.quit()
-            quit()
+            quitGame()
 
 def isPointInRect(x, y, rect):
     """Checks if a coordinate is within the bounds of a pygame.rect object
@@ -73,7 +76,7 @@ def createRects(x, y):
     return rects
 
 def text_objects(text, font): #function used from https://pythonprogramming.net/pygame-start-menu-tutorial/
-    textSurface = font.render(text, True, white)
+    textSurface = font.render(text, True, (255, 255, 255))
     return textSurface, textSurface.get_rect()
 
 def showboat(rects):
@@ -173,7 +176,7 @@ def trackPlacement(rects):
         if B.validPlace(spotsToCheck):
             print("Boat Placed")
             placeNumber += 1
-            disp.fill((192, 192, 192), (350, 135, 200, 40))
+            updateBoatToPlaceText(placeNumber)
         else:
             print("Error placing boat")
             for i in spotsToCheck:
@@ -183,7 +186,29 @@ def trackPlacement(rects):
 
         spotsToCheck = []
 
-if gameState == "welcome":
+def trackPlayButton():
+    global gameState
+
+    if pygame.mouse.get_pressed() == (1, 0, 0):
+        mouseX, mouseY = pygame.mouse.get_pos()
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.43,120,75)):
+            setupPlaceBoats1()
+
+def trackQuitButton():
+    if pygame.mouse.get_pressed() == (1, 0, 0):
+        mouseX, mouseY = pygame.mouse.get_pos()
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.68,120,75)):
+            quitGame()
+
+def updateBoatToPlaceText(size):
+    disp.fill((192, 192, 192), (350, 135, 200, 40))
+    pygame.display.update((350, 135, 200, 40))
+    font = pygame.font.SysFont("Times New Roman", 30)
+    text = font.render("Boat size to place: " + str(size), True, (0, 128, 0))
+    disp.blit(text, (350, 135))
+    pygame.display.update((350, 135, 200, 40))
+
+def setupWelcome():
     l_blue = (80, 171, 250)
     white = (255, 255, 255)
     black = (0,0,0)
@@ -217,16 +242,23 @@ if gameState == "welcome":
     gameDisplay.blit(TextSurf3, TextRect3)
     pygame.display.update()
 
-elif gameState == "placeBoats1":
+def setupPlaceBoats1():
+    global gameState
+    global grid
+
+    disp.fill((192, 192, 192))
     font = pygame.font.SysFont("Times New Roman", 40)
     text = font.render("Player 1, Place your " + str(numberOfBoats) + " boats", True, (0, 128, 0))
     disp.blit(text, (350, 100))
 
+    updateBoatToPlaceText(1)
+
     grid = createRects(350, 200)
-
+    
     pygame.display.update()
+    gameState = "placeBoats1"
 
-elif gameState == "gamePlay":
+def setupGamePlay():
     disp_width = 1080
     disp_height = 720
     disp = pygame.display.set_mode((disp_width, disp_height))
@@ -247,18 +279,17 @@ elif gameState == "gamePlay":
     board_cleared=True
 
 
+setupWelcome()
+
 while True:
     event_handler()
     if gameState == "welcome":
-        pass
+        trackPlayButton()
+        trackQuitButton()
 
     elif gameState == "placeBoats1":
         if placeNumber <= numberOfBoats:
-            font = pygame.font.SysFont("Times New Roman", 30)
-            text = font.render("Boat to place: " + str(placeNumber) + "x" + str(placeNumber), True, (0, 128, 0))
-            disp.blit(text, (350, 135))
             trackPlacement(grid)
-            pygame.display.update((350, 135, 200, 40))
         else:
             pass
             #go to next screen
