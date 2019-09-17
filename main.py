@@ -162,6 +162,12 @@ def clear_board(rects):
             pygame.display.update(rects[i][j])
 
 def trackPlacement(rects):
+    """ tracks the placement of boats on the placeBoats screens for player 1 and 2
+    
+    Args:
+        rects (8x8 array of pygame.Rect objects): grid to check on
+    """
+
     global placeNumber
     global spotsToCheck
 
@@ -203,6 +209,8 @@ def trackPlacement(rects):
         spotsToCheck = []
 
 def trackPlayButton():
+    """ Tracks if the Play button on the welcome screen has been pressed. If it has, setupPlaceBoats(1) is called"""
+
     global gameState
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
@@ -211,12 +219,21 @@ def trackPlayButton():
             setupPlaceBoats(1)
 
 def trackQuitButton():
+    """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
+
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouseX, mouseY = pygame.mouse.get_pos()
         if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.68,120,75)):
             quitGame()
 
 def updateBoatToPlaceText(size):
+    """ Every time this is called, the text that says "Boat size to place..." on gameState = "placeBoats1" 
+        or gameState = "placeBoats2" will get redrawn with the new size shown
+    
+    Args:
+        size (int): should corresponds to size of current boat to place (e.g. global placeNumber)
+    """
+    
     disp.fill((192, 192, 192), (350, 135, 200, 40))
     pygame.display.update((350, 135, 200, 40))
     font = pygame.font.SysFont("Times New Roman", 30)
@@ -225,6 +242,14 @@ def updateBoatToPlaceText(size):
     pygame.display.update((350, 135, 200, 40))
 
 def showSwitchPlayers(originalTime):
+    """ Displays the screen that tells players to switch. Gives players three seconds to do so.
+    
+    Args:
+        originalTime (pygame.time.get_ticks()): represents the original time (in systicks, represented as int)
+                                                that this method was called. It is used agains the current
+                                                time in systics to see if three seconds has passed
+    """
+
     global placeNumber
     global gameState 
 
@@ -233,12 +258,14 @@ def showSwitchPlayers(originalTime):
     text = font.render("Switch Players", True, (0, 128, 0))
     disp.blit(text, (350, 100))
     pygame.display.update()
-    while pygame.time.get_ticks() < originalTime + 2000:
+    while pygame.time.get_ticks() < originalTime + 3000:
         event_handler()
     
     setupPlaceBoats(2)
 
 def setupWelcome():
+    """ Sets up initial graphics and variables for the welcome state """
+
     l_blue = (80, 171, 250)
     white = (255, 255, 255)
     black = (0,0,0)
@@ -272,6 +299,12 @@ def setupWelcome():
     pygame.display.update()
 
 def setupPlaceBoats(whichPlayer):
+    """ Sets up initial graphics and variables for the placeBoats state 
+    
+    Args:
+        whichPlayer (int): 1 -> setup the placeBoats state for player 1, 2 -> setup the placeBoates satate for player 2
+    """
+
     global gameState
     global grid
     global placeNumber
@@ -293,6 +326,8 @@ def setupPlaceBoats(whichPlayer):
     gameState = "placeBoats" + str(whichPlayer)
 
 def setupGamePlay():
+    """ Sets up initial graphics and variables for the gamePlay state """
+
     global leftGrid
     global rightGrid
     global gameState
