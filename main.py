@@ -15,11 +15,6 @@ pygame.display.set_caption('Battleboats')
 
 gameState = "welcome"
 
-rects_clicked=[]
-rects_missed = []
-rects_hit = []
-ship_square = [(233, 233, 33, 33), (267, 233, 33, 33 ), (301, 233, 33, 33), (470, 470, 33, 33), (470, 436, 33, 33), (470, 402, 33, 33), (301, 368, 33, 33), (335, 368, 33, 33)]
-
 def event_handler():
     """Checks for different pygame events"""
 
@@ -74,6 +69,15 @@ def text_objects(text, font): #function used from https://pythonprogramming.net/
     textSurface = font.render(text, True, white)
     return textSurface, textSurface.get_rect()
 
+def showboat(rects):
+    for i in range(0, 8):
+        for j in range(0, 8):
+            if(i,j) in my_ships:
+                pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
+                pygame.display.update(rects[i][j])
+
+
+
 def trackRects(rects):
     """Tracks when a single square in a grid is pressed by the mouse
 
@@ -84,6 +88,9 @@ def trackRects(rects):
 
     newPress = True
     mouseX = 0
+
+
+
     mouseY = 0
 
 
@@ -92,22 +99,52 @@ def trackRects(rects):
         mouseX, mouseY = pygame.mouse.get_pos()
         for i in range(0, 8):
             for j in range(0, 8):
-                if isPointInRect(mouseX, mouseY, rects[i][j]) and rects[i][j] in ship_square and not rects[i][j] in rects_clicked:
-                    rects_hit.append(rects[i][j])
-                    rects_clicked.append(rects[i][j])
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and (i,j) in ship_square and not (i,j) in rects_clicked:
+                    rects_hit.append((i,j))
+                    rects_clicked.append((i,j))
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked)
-                elif isPointInRect(mouseX, mouseY, rects[i][j]) and not rects[i][j] in rects_clicked:
-                    rects_missed.append(rects[i][j])
-                    rects_clicked.append(rects[i][j])
+                elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked:
+                    rects_missed.append((i,j))
+                    rects_clicked.append((i,j))
                     pygame.draw.rect(disp, (0, 0, 255), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked)
+
         pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
+
+def track_toggle() :
+    global toggled
+    newPress = True
+    mouseX = 0
+    mouseY = 0
+
+
+    if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
+        newPress = False
+        mouseX, mouseY = pygame.mouse.get_pos()
+        if isPointInRect(mouseX, mouseY, pygame.Rect(533, 200, 15, 15)):
+            if not toggled:
+                checkbox=pygame.draw.rect(disp, (0, 0, 0), (533, 200, 15, 15))
+                pygame.display.update(pygame.Rect(533, 200, 15, 15))
+                toggled=True
+            else:
+                checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
+                pygame.display.update(pygame.Rect(533, 200, 15, 15))
+                toggled=False
+
+    elif pygame.mouse.get_pressed() != (1, 0, 0):
+        newPress = True
+
+def clear_board(rects):
+    for i in range(0, 8):
+        for j in range(0, 8):
+            pygame.draw.rect(disp, (192, 192, 192), rects[i][j])
+            pygame.display.update(rects[i][j])
 
 if gameState == "welcome":
     l_blue = (80, 171, 250)
@@ -146,15 +183,39 @@ if gameState == "welcome":
 elif gameState == "placeBoats":
     pass
 elif gameState == "gamePlay":
+    disp_width = 1080
+    disp_height = 720
+    disp = pygame.display.set_mode((disp_width, disp_height))
+    disp.fill((192, 192, 192))
+    pygame.display.set_caption('Battleboats')
+    toggle = pygame.font.SysFont('Ariel', 20)
+    toggle_display=toggle.render('  SHOW MY SHIPS', False, (0, 0, 0)) #☑
+    disp.blit(toggle_display, (548,200))
+    checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
+    toggled=False
+    rects_clicked=[]
+    rects_missed = []
+    rects_hit = []
+    ship_square = [(0,0), (0,1), (0,2), (0,3), (4,4), (3,4), (7,7), (7,6), (7,5)]
+    my_ships = [(1,1), (2,1), (3,1), (4,1), (7,7), (6,7), (4,3), (4,4), (4,5)]
     leftGrid = createRects(200, 200)
     rightGrid = createRects(500, 200)
+    board_cleared=True
+
 
 while True:
     event_handler()
-
     if gameState == "welcome":
         pass
     elif gameState == "placeBoats":
         pass
     elif gameState == "gamePlay":
         trackRects(leftGrid)
+        track_toggle()
+        if toggled and board_cleared:
+            showboat(rightGrid)
+            board_cleared=False
+        if not toggled and not board_cleared:
+            clear_board(rightGrid)
+            rightGrid=createRects(500, 200)
+            board_cleared=True
