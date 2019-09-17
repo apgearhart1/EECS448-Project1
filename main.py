@@ -11,6 +11,7 @@ disp_height = 720
 disp = pygame.display.set_mode((disp_width, disp_height))
 disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
+clock = pygame.time.Clock()
 
 gameState = "placeBoats1"
 numberOfBoats = 4
@@ -160,12 +161,10 @@ def trackPlacement(rects):
         mouseX, mouseY = pygame.mouse.get_pos()
         for i in range(0, 8):
             for j in range(0, 8):
-                if isPointInRect(mouseX, mouseY, rects[i][j]) and [j, i] not in spotsToCheck:
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and [j, i] not in spotsToCheck and len(spotsToCheck) < placeNumber:
                     spotsToCheck.append([j, i])
                     pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
-
-        #pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) != 0:
         newPress = True
@@ -173,6 +172,8 @@ def trackPlacement(rects):
         B = Boat()
         if B.validPlace(spotsToCheck):
             print("Boat Placed")
+            placeNumber += 1
+            disp.fill((192, 192, 192), (350, 135, 200, 40))
         else:
             print("Error placing boat")
             for i in spotsToCheck:
@@ -188,7 +189,6 @@ if gameState == "welcome":
     black = (0,0,0)
     gameDisplay = pygame.display.set_mode((disp_width,disp_height))
     pygame.display.set_caption('Battleboats')
-    clock = pygame.time.Clock()
     gameDisplay.fill(l_blue)
     largeText = pygame.font.Font('freesansbold.ttf',65)
     TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
@@ -218,7 +218,7 @@ if gameState == "welcome":
     pygame.display.update()
 
 elif gameState == "placeBoats1":
-    font = pygame.font.SysFont("Times New Roman", 30)
+    font = pygame.font.SysFont("Times New Roman", 40)
     text = font.render("Player 1, Place your " + str(numberOfBoats) + " boats", True, (0, 128, 0))
     disp.blit(text, (350, 100))
 
@@ -254,11 +254,14 @@ while True:
 
     elif gameState == "placeBoats1":
         if placeNumber <= numberOfBoats:
-            font = pygame.font.SysFont("Times New Roman", 20)
+            font = pygame.font.SysFont("Times New Roman", 30)
             text = font.render("Boat to place: " + str(placeNumber) + "x" + str(placeNumber), True, (0, 128, 0))
             disp.blit(text, (350, 135))
-
             trackPlacement(grid)
+            pygame.display.update((350, 135, 200, 40))
+        else:
+            pass
+            #go to next screen
 
     elif gameState == "gamePlay":
         trackRects(leftGrid)
@@ -270,3 +273,4 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
+    clock.tick(30)
