@@ -202,9 +202,9 @@ def trackPlacement(rects):
         else:
             print("Error placing boat")
             for i in spotsToCheck:
-                pygame.draw.rect(disp, (192, 192, 192), rects[i[1]][i[0]])
-                pygame.draw.rect(disp, (0, 0, 0), rects[i[1]][i[0]], 2)
-                pygame.display.update(rects[i[1]][i[0]])
+                pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
+                pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
+                pygame.display.update(rects[i[0]][i[1]])
 
         spotsToCheck = []
 
