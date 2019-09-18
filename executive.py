@@ -1,5 +1,5 @@
 from player import Player
-from boats import boat
+from boats import oat
 from board import board
 
 class Executive:
@@ -9,19 +9,17 @@ class Executive:
 		self.player2 = Player()
 		self.turns = 1
 	
-	def selectBoats(self):	
-		check = False
-		while not check:
-			print("Select number of boats (1-5)")
-			num = input()
-			if num > 0 and num < 6:
-				for i in range(1,num):
-					self.player1.placeShip(i)
-				for j in range(1,num):
-					self.player2.placeShip(j)
-				check = True
-			else:
-				print("Invalid number of boats!")
+	def selectBoats(self, numBoats, player):	
+
+		if player == "player1":
+			for i in range(1,numBoats):
+				self.player1.placeShip(i)
+		if player == "player2":
+			for j in range(1,numBoats):
+				self.player2.placeShip(j)
+		else:
+			return "Error, boats could not be placed"
+
 		
 	def playerTurn(self):
 		if self.turns % 2 == 0:
@@ -44,5 +42,12 @@ class Executive:
 			for i in self.player1.getShipList():
 				if self.player1.getShip(i).getcoordinates() == location:
 					print(self.player1.getShip(i).hit(location))
+					
+	def checkWin(self):
+		if self.player1.getCoordinateList() == []:
+			return True
+		if self.player2.getCoordinateList() == []:
+			return True
+		return False
 					
 			
