@@ -180,8 +180,8 @@ def trackPlacement(rects):
         mouseX, mouseY = pygame.mouse.get_pos()
         for i in range(0, 8):
             for j in range(0, 8):
-                if isPointInRect(mouseX, mouseY, rects[i][j]) and [j, i] not in spotsToCheck and len(spotsToCheck) < placeNumber:
-                    spotsToCheck.append([j, i])
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and [i, j] not in spotsToCheck and len(spotsToCheck) < placeNumber:
+                    spotsToCheck.append([i, j])
                     pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
 
