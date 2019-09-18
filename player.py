@@ -1,5 +1,5 @@
 from board import board 
-from boats import boat
+from boats import Boat
 
 
 class Player:
@@ -21,11 +21,11 @@ class Player:
 		return counter
 	
 
-	def placeShip(self, length):
+	def placeShip(self, length, location):
 		# need to get coordinates from click and store them in location variable 
 		
 		# creates a new ship
-		tempShip = boat(length, location)
+		tempShip = Boat(length, location)
 		
 		if tempShip.validPlace(length, location):
 			self.shipList.append(tempShip)
