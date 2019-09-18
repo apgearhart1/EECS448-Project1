@@ -537,6 +537,7 @@ while True:
 
     elif gameState == "gamePlay1":
         printRects1(leftGrid)
+        printRects2(rightGrid)
         trackRects1(leftGrid)
         track_toggle()
         if toggled and board_cleared:
@@ -548,6 +549,7 @@ while True:
             board_cleared=True
     elif gameState == "gamePlay2":
         printRects2(leftGrid)
+        printRects1(rightGrid)
         trackRects2(leftGrid)
         track_toggle()
         if toggled and board_cleared:
