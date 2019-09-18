@@ -1,5 +1,5 @@
 from player import Player
-from boats import oat
+from boats import Boat
 from board import board
 
 class Executive:
