@@ -1,5 +1,5 @@
-class boat:
-    def __init__(self, size, coordinates):
+class Boat:
+    def __init__(self, size=1, coordinates=[]):
         self.size = size
         self.coordinates = coordinates
         self.destroyed = False
@@ -19,34 +19,31 @@ class boat:
                 if i != (len(coordinates) - 1):
                     if (coordinates[i][0] != coordinates[i+1][0]):
                         print(1, coordinates[i][0], coordinates[i+1][0])
-                        return False
-                    check = True
-                    if (coordinates[i][1] != coordinates[i+1][1] and check == False):
-                        print(2, coordinates[i][1], coordinates[i+1][1])
-                        return False
+                        if (coordinates[i][1] != coordinates[i+1][1]):
+                            print(2, coordinates[i][1], coordinates[i+1][1])
+                            return False
                 else:
                     if (coordinates[i][0] != coordinates[i-1][0]):
                         print(3, coordinates[i][0], coordinates[i-1][0])
-                        return False
-                    check = True
-                    if (coordinates[i][1] != coordinates[i-1][1] and check == False):
-                        print(4, coordinates[i][1], coordinates[i-1][1])
-                        return False
+                        if (coordinates[i][1] != coordinates[i-1][1]):
+                            print(4, coordinates[i][1], coordinates[i-1][1])
+                            return False
+            print("k")
             if coordinates[0][0] == coordinates[1][0]:
                 for i in range(len(coordinates)):
                     if i != len(coordinates)-1:
-                        if coordinates[i+1][1] - coordinates[i][1] != 1:
+                        if abs(coordinates[i+1][1] - coordinates[i][1]) != 1:
                             return False
                     else:
-                        if coordinates[i][1] - coordinates[i-1][1] != 1:
+                        if abs(coordinates[i][1] - coordinates[i-1][1]) != 1:
                             return False
             elif coordinates[0][1] == coordinates[1][1]:
                 for i in range(len(coordinates)):
                     if i != len(coordinates)-1:
-                        if coordinates[i+1][0] - coordinates[i][0] != 1:
+                        if abs(coordinates[i+1][0] - coordinates[i][0]) != 1:
                             return False
                     else:
-                        if coordinates[i][0] - coordinates[i-1][0] != 1:
+                        if abs(coordinates[i][0] - coordinates[i-1][0]) != 1:
                             return False
         else:
             if coordinates[0][0] < 0 or coordinates[0][0] >= 8 or coordinates[0][1] < 0 or coordinates[0][1] >= 8:
@@ -98,3 +95,14 @@ class boat:
         Returns int of the size of the boat
         """
         return self.size
+
+    def setCoordinates(self, coordinates):
+        """Sets coordinates of the boat
+
+        Args:
+        coordinates - 2D array of coordinates
+
+        Returns:
+        None
+        """
+        self.coordinates = coordinates
