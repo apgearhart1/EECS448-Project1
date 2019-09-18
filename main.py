@@ -2,7 +2,6 @@ import pygame
 import pygame.gfxdraw
 from pygame.locals import *
 from boats import Boat
-
 pygame.init()
 
 disp_width = 1080
@@ -14,7 +13,7 @@ pygame.display.set_caption('Battleboats')
 clock = pygame.time.Clock()
 
 gameState = "welcome"
-numberOfBoats = 4
+numberOfBoats = 0
 placeNumber = 1
 spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
 
@@ -218,6 +217,64 @@ def trackPlayButton():
         if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.43,120,75)):
             setupPlaceBoats(1)
 
+def getSize():
+    """Handles the user interface of selecting the size of the boats
+    
+    Args:
+    None
+
+    Returns:
+    size - Number of boats
+    """
+    global numberOfBoats
+    white = (255, 255, 255)
+    black = (0,0,0)
+    pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
+    pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+    pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+    pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+    pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+    pygame.display.update()
+    largeText = pygame.font.Font('freesansbold.ttf',65)
+    blackText = pygame.font.Font('freesansbold.ttf',65)
+    medText = pygame.font.Font('freesansbold.ttf', 48)
+    smallText = pygame.font.Font('freesansbold.ttf', 36)
+    TextSurf, TextRect = text_objects("1", largeText)
+    TextSurf2, TextRect2 = text_objects("2", largeText)
+    TextSurf3, TextRect3 = text_objects("3", largeText)
+    TextSurf4, TextRect4 = text_objects("4", largeText)
+    TextSurf5, TextRect5 = text_objects("5", largeText)
+    TextRect.center = ((disp_width*.36),(disp_height*.35))
+    TextRect2.center = ((disp_width*.36 + 85),(disp_height*.35))
+    TextRect3.center = ((disp_width*.36 + 170), (disp_height*.35))
+    TextRect4.center = ((disp_width*.36 + 255), (disp_height*.35))
+    TextRect5.center = ((disp_width*.36 + 340), (disp_height*.35))
+    disp.blit(TextSurf, TextRect)
+    disp.blit(TextSurf2, TextRect2)
+    disp.blit(TextSurf3, TextRect3)
+    disp.blit(TextSurf4, TextRect4)
+    disp.blit(TextSurf5, TextRect5)
+    
+    if pygame.mouse.get_pressed() == (1, 0, 0):
+        mouseX, mouseY = pygame.mouse.get_pos()
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33,disp_height*.30,70,70)):
+            numberOfBoats = 1
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+85,disp_height*.30,70,70)):
+            numberOfBoats = 2
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+170,disp_height*.30,70,70)):
+            numberOfBoats = 3
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+255,disp_height*.30,70,70)):
+            numberOfBoats = 4
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+340,disp_height*.30,70,70)):
+            numberOfBoats = 5
+
+    pygame.display.update()
+
+    
+        
+
+
+
 def trackQuitButton():
     """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
 
@@ -278,7 +335,7 @@ def setupWelcome():
     TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
     TextSurf2, TextRect2 = text_objects("Play", medText)
     TextSurf3, TextRect3 = text_objects("Quit", medText)
-    TextRect.center = ((disp_width/2),(disp_height/4))
+    TextRect.center = ((disp_width/2),(disp_height*.15))
     TextRect2.center = ((disp_width/2), (disp_height/2))
     TextRect3.center = ((disp_width/2), (disp_height*.75))
     #makes buttons interactive
@@ -350,7 +407,9 @@ while True:
     event_handler()
 
     if gameState == "welcome":
-        trackPlayButton()
+        getSize()
+        if numberOfBoats <= 5 and numberOfBoats > 0:
+            trackPlayButton()
         trackQuitButton()
 
     elif gameState == "placeBoats1":
