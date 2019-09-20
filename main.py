@@ -2,6 +2,7 @@ import pygame
 import pygame.gfxdraw
 from pygame.locals import *
 from boats import Boat
+from executive import Executive 
 
 pygame.init()
 
@@ -41,6 +42,7 @@ rects_missed2 = []
 rects_hit2 = []
 opposing_ship2 = my_ships1
 my_ships2 = opposing_ship1
+#game = Executive()
 
 board_cleared=True
 
