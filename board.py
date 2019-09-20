@@ -1,13 +1,15 @@
 class board:
-    def __init__(self, rowSize, colSize, boatlist = []):
+    def __init__(self, rowSize, colSize):
         self.rowSize = rowSize
         self.colSize = colSize
         self.boardStorage = [[0 for y in range(colSize)] for x in range(rowSize)]
+        self.hits = [[False for y in range(colSize)] for x in range(rowSize)]
+        self.misses = [[False for y in range(colSize)] for x in range(rowSize)]
+
+    def populateBoard(self, boatlist):
         for boat in boatlist:
             for coordinate in boat.getCoordinates():
                 self.boardStorage[coordinate[0]][coordinate[1]] = 1
-        self.hits = [[False for y in range(colSize)] for x in range(rowSize)]
-        self.misses = [[False for y in range(colSize)] for x in range(rowSize)]
 
     def markMiss(self, xPos, yPos):
         self.misses[xPos][yPos] = True
