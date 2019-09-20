@@ -1,4 +1,4 @@
-from board import board 
+#from board import board 
 from boats import Boat
 
 
@@ -21,13 +21,10 @@ class Player:
 		return counter
 	
 
-	def placeShip(self, length, location):	
-		# creates a new ship
-		tempShip = Boat(length, location)
-		
-		if tempShip.validPlace(length, location):
-			self.shipList.append(tempShip)
-			self.shipCoordinateList.append(location)
+	def placeShip(self, ship):			
+		if ship.validPlace(ship.getCoordinates):
+			self.shipList.append(ship)
+			self.shipCoordinateList.append(ship.getCoordinates)
 			self.myBoard.place(location)
 			return True			
 		else:
