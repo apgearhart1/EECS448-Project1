@@ -1,14 +1,20 @@
 class board:
-    def __init__(self, rowSize, colSize, boatlist):
+    def __init__(self, rowSize, colSize, boatlist = []):
         self.rowSize = rowSize
         self.colSize = colSize
         self.boardStorage = [[0 for y in range(colSize)] for x in range(rowSize)]
         for boat in boatlist:
             for coordinate in boat.getCoordinates():
                 self.boardStorage[coordinate[0]][coordinate[1]] = 1
-        self.hits = [[]]
-        self.misses = [[]]
+        self.hits = [[False for y in range(colSize)] for x in range(rowSize)]
+        self.misses = [[False for y in range(colSize)] for x in range(rowSize)]
 
+    def markMiss(self, xPos, yPos):
+        self.misses[xPos][yPos] = True
+    
+    def markHit(self, xPos, yPos):
+        self.hits[xPos][yPos] = True
+    
     def isMiss(self, xPos, yPos):
         """Checks if there is a miss at a given square
         Args:
@@ -48,8 +54,8 @@ class board:
     def testBoard(self):
         """Prints out the board for testing purposes
         """
-        b = [[0 for y in range(8)] for x in range(8)]
-        print(b)
+        for x in range(self.rowSize):
+            print(self.boardStorage[x])
 
     def isBoat(self, xPos, yPos):
         """Checks if there is a boat tile at a given square
