@@ -56,6 +56,10 @@ class board:
         """
         for x in range(self.rowSize):
             print(self.boardStorage[x])
+        for x in range(self.rowSize):
+            print(self.misses[x])
+        for x in range(self.rowSize):
+            print(self.hits[x])
 
     def isBoat(self, xPos, yPos):
         """Checks if there is a boat tile at a given square
