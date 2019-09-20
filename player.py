@@ -1,5 +1,6 @@
 #from board import board 
 from boats import Boat
+import copy
 
 
 class Player:
@@ -88,6 +89,18 @@ class Player:
 				return True
 			else:
 				return False
+				
+	def setOpBoard(opBoard):
+		"""Copies oponent'ss board for this player
+
+        Args:
+        opBoard - oponent's board object
+
+        Returns:
+        None
+        """
+		self.opBoard = copy.deepcopy(opBoard)
+		
 		
 			
 		
