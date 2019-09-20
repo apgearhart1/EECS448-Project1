@@ -8,9 +8,9 @@ class Player:
 		self.shipList = [] 
 		self.shipCoordinateList = []
 		# this player's board
-		self.myBoard = myBoard(8,8)
+		self.myBoard = board(8,8,[])
 		# opponent's board		
-		self.theirBoard = theirBoard(8,8)
+		self.opBoard = board(8,8,[])
 
 	def shipsDestroyed(self):
 		# increment counter for every ship that is destroyed 
@@ -22,10 +22,10 @@ class Player:
 	
 
 	def placeShip(self, ship):			
-		if ship.validPlace(ship.getCoordinates):
+		if ship.validPlace(ship.getCoordinates()):
 			self.shipList.append(ship)
-			self.shipCoordinateList.append(ship.getCoordinates)
-			self.myBoard.place(location)
+			self.shipCoordinateList.append(ship.getCoordinates())
+			#self.myBoard.place(location)
 			return True			
 		else:
 			#print("Invalid placement")
@@ -39,6 +39,15 @@ class Player:
 		
 	def getCoordinateList(self):
 		return self.shipCoordinateList 
+		
+	def removeShip(coordinates):
+		for ship in self.ShipList:
+			if self.shipList[ship].getCoordinates() == coordinates:
+				self.shipList.pop(ship)
+				self.shipCoordinateList.remove(coordinates)
+				return True
+			else:
+				return False
 		
 			
 		
