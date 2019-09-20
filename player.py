@@ -21,9 +21,7 @@ class Player:
 		return counter
 	
 
-	def placeShip(self, length, location):
-		# need to get coordinates from click and store them in location variable 
-		
+	def placeShip(self, length, location):	
 		# creates a new ship
 		tempShip = Boat(length, location)
 		
@@ -42,7 +40,7 @@ class Player:
 	def getShip(self, index):
 		return self.shipList[index]
 		
-	def getCoordinateList(self)
+	def getCoordinateList(self):
 		return self.shipCoordinateList 
 		
 			
