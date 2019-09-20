@@ -1,6 +1,6 @@
 from player import Player
 from boats import Boat
-from board import board
+#from board import board
 
 class Executive:
 
@@ -10,7 +10,6 @@ class Executive:
 		self.turns = 1
 	
 	def selectBoats(self, numBoats, player):	
-
 		if player == "player1":
 			for i in range(1,numBoats):
 				self.player1.placeShip(i)
@@ -30,18 +29,16 @@ class Executive:
 			self.turns += 1
 			return "player1"
 		
-	def attack(self):
+	def attack(self, location):
 		if self.playerTurn() == "player1":
-			#check where the player clicks here 
-			#location = where the player clicks
 			for i in self.player2.getShipList():
 				if self.player2.getShip(i).getcoordinates() == location:
-					print(self.player2.getShip(i).hit(location))
+					self.player2.getShip(i).hit(location)
 					
 		elif self.playerTurn() == "player2":
 			for i in self.player1.getShipList():
 				if self.player1.getShip(i).getcoordinates() == location:
-					print(self.player1.getShip(i).hit(location))
+					self.player1.getShip(i).hit(location)
 					
 	def checkWin(self):
 		if self.player1.getCoordinateList() == []:
