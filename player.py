@@ -9,9 +9,9 @@ class Player:
 		self.shipList = [] 
 		self.shipCoordinateList = []
 		# this player's board
-		self.myBoard = board(8,8,[])
+		self.myBoard = board(8,8)
 		# opponent's board		
-		self.opBoard = board(8,8,[])
+		self.opBoard = board(8,8)
 
 	def shipsDestroyed(self):
 		"""Checks to see how many ships have been destroyed
@@ -72,7 +72,7 @@ class Player:
         """
 		return self.shipCoordinateList 
 		
-	def removeShip(coordinates):
+	def removeShip(self, coordinates):
 		"""Removes ship from the players current list of ships and list of ship coordinates 
 
         Args:
@@ -81,15 +81,16 @@ class Player:
         Returns:
         Returns true if the ship was successfully removed, false otherwise
         """
-		for ship in self.ShipList:
-			if self.shipList[ship].getCoordinates() == coordinates:
-				self.shipList.pop(ship)
-				self.shipCoordinateList.remove(coordinates)
-				return True
-			else:
-				return False
+		for ship in self.shipList:
+			for i in range(0,4):
+				if self.shipList[i].getCoordinates() == coordinates:
+					self.shipList.pop(i)
+					self.shipCoordinateList.remove(coordinates)
+					return True
 				
-	def setOpBoard(opBoard):
+		return False
+				
+	def setOpBoard(self, opBoard):
 		"""Copies oponent's board for this player
 
         Args:
@@ -98,16 +99,41 @@ class Player:
         Returns:
         None
         """
-		self.opBoard = copy.deepcopy(opBoard)
+
+		self.opBoard = opBoard
 		
 	def getMyBoard(self):
+		"""Gets this player's board
+
+        Args:
+        None
+
+        Returns:
+        This player's board object
+        """
 		return self.myBoard
 		
 	def getOpBoard(self):
+		"""Gets this opponent's board
+
+        Args:
+        None
+
+        Returns:
+        Opponent's board object
+        """
 		return self.opBoard
 	
 	def addToBoard(self):
-		self.MyBoard.populateBoard(self.shipList)
+		"""Populates board according to this player's current list of ships
+
+        Args:
+        None
+
+        Returns:
+        None
+        """
+		self.myBoard.populateBoard(self.shipList)
 		
 		
 	
