@@ -150,7 +150,7 @@ def trackRects1(rects):
                     pygame.time.delay(250)
                     setupGamePlay2()
 
-        pygame.time.delay(250)
+
 
 def trackRects2(rects):
     """Tracks when a single square in a grid is pressed by the mouse for player 2
@@ -184,7 +184,6 @@ def trackRects2(rects):
                     pygame.time.delay(250)
                     setupGamePlay1()
 
-        pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
@@ -473,7 +472,7 @@ def setupGamePlay1():
     player_turn=pygame.font.SysFont('Consolas', 40)
     player_turn_display=player_turn.render("PLAYER 1's TURN", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
-    toggle_display=toggle.render('  SHOW MY SHIPS', False, (0, 0, 0))
+    toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
@@ -499,7 +498,7 @@ def setupGamePlay2():
     player_turn=pygame.font.SysFont('Consolas', 40)
     player_turn_display=player_turn.render("PLAYER 2's TURN", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
-    toggle_display=toggle.render('  SHOW MY SHIPS', False, (0, 0, 0))
+    toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
