@@ -22,8 +22,8 @@ class Player:
         """
 		# increment counter for every ship that is destroyed 
 		counter = 0
-		for ship in self.shipList:
-			if self.shipList[ship].checkDestroyed():
+		for i in range(len(self.shipList)):
+			if self.shipList[i].checkDestroyed():
 				counter = counter + 1
 		return counter
 	
@@ -134,6 +134,8 @@ class Player:
         None
         """
 		self.myBoard.populateBoard(self.shipList)
-		
-		
 	
+	def addToHitList(self, i, j):
+		for i in range(0, len(self.shipList)):
+			if (i,j) in self.shipList[i].getCoordinates():
+				self.shipList[i].hit((i,j))

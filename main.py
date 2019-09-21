@@ -3,7 +3,7 @@ import pygame.gfxdraw
 from pygame.locals import *
 from boats import Boat
 from executive import Executive
-
+from player import Player
 pygame.init()
 
 disp_width = 1080
@@ -15,11 +15,12 @@ pygame.display.set_caption('Battleboats')
 clock = pygame.time.Clock()
 draw_once=True
 gameState = "welcome"
-
+winner = "null"
 numberOfBoats = 4
 
 numberOfBoats = 0
-
+player1 = Player()
+player2 = Player()
 placeNumber = 1
 spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
 
@@ -34,8 +35,8 @@ toggled=False
 rects_clicked1=[]
 rects_missed1 = []
 rects_hit1 = []
-opposing_ship1 = [(0,0), (0,1), (0,2), (0,3), (4,4), (3,4), (7,7), (7,6), (7,5)]
-my_ships1 = [(1,1), (2,1), (3,1), (4,1), (7,7), (6,7), (4,3), (4,4), (4,5)]
+opposing_ship1 = []
+my_ships1 = []
 
 rects_clicked2=[]
 rects_missed2 = []
@@ -125,7 +126,7 @@ def trackRects1(rects):
     Args:
         rects (8x8 array of pygame.Rect objects): the grid to check on
     """
-
+    global winner
     newPress = True
     mouseX = 0
     mouseY = 0
@@ -137,10 +138,14 @@ def trackRects1(rects):
             for j in range(0, 8):
                 if isPointInRect(mouseX, mouseY, rects[i][j]) and (i,j) in opposing_ship1 and not (i,j) in rects_clicked1: #clicked on square containing ship
                     rects_hit1.append((i,j))
+                    player2.addToHitList(i,j)
                     rects_clicked1.append((i,j))
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked1)
+                    if player2.shipsDestroyed() == numberOfBoats:
+                        winner = "Player 1"
+                        gameState = "winner"
                 elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked1: #clicked on a square and missed
                     rects_missed1.append((i,j))
                     rects_clicked1.append((i,j))
@@ -158,7 +163,7 @@ def trackRects2(rects):
     Args:
         rects (8x8 array of pygame.Rect objects): the grid to check on
     """
-
+    global winner
     newPress = True
     mouseX = 0
     mouseY = 0
@@ -171,10 +176,14 @@ def trackRects2(rects):
             for j in range(0, 8):
                 if isPointInRect(mouseX, mouseY, rects[i][j]) and (i,j) in opposing_ship2 and not (i,j) in rects_clicked2:
                     rects_hit2.append((i,j))
+                    player1.addToHitList(i,j)
                     rects_clicked2.append((i,j))
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked2)
+                    if player1.shipsDestroyed() == numberOfBoats:
+                        winner = "Player 2"
+                        gameState = "winner"
                 elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked2:
                     rects_missed2.append((i,j))
                     rects_clicked2.append((i,j))
@@ -247,7 +256,12 @@ def trackPlacement(rects):
 
     global placeNumber
     global spotsToCheck
-
+    global player1
+    global player2
+    global opposing_ship1
+    global opposing_ship2
+    global my_ships1
+    global my_ships2
     newPress = True
     mouseX = 0
     mouseY = 0
@@ -257,25 +271,27 @@ def trackPlacement(rects):
         mouseX, mouseY = pygame.mouse.get_pos()
         for i in range(0, 8):
             for j in range(0, 8):
-                if isPointInRect(mouseX, mouseY, rects[i][j]) and [i, j] not in spotsToCheck and len(spotsToCheck) < placeNumber:
-                    spotsToCheck.append([i, j])
+                if isPointInRect(mouseX, mouseY, rects[i][j]) and (i,j) not in spotsToCheck and len(spotsToCheck) < placeNumber:
+                    spotsToCheck.append((i,j))
                     pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
 
     elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) == placeNumber:
         newPress = True
         print("spotsToCheck:", spotsToCheck)
-        B = Boat()
+        B = Boat(len(spotsToCheck), spotsToCheck)
         if B.validPlace(spotsToCheck):
             print("Boat Placed")
             placeNumber += 1
             updateBoatToPlaceText(placeNumber)
             if gameState == "placeBoats1":
-                #TODO add this boat to player1's list of boat placements
-                pass
+                player1.placeShip(B)
+                my_ships1.append(B.getCoordinates())
+                opposing_ship2.append(B.getCoordinates())
             elif gameState == "placeBoats2":
-                #TODO add this boat to player2's list of boat placements
-                pass
+                player2.placeShip(B)
+                my_ships2.append(B.getCoordinates())
+                opposing_ship1.append(B.getCoordinates())
         else:
             print("Error placing boat")
             for i in spotsToCheck:
@@ -284,7 +300,7 @@ def trackPlacement(rects):
                 pygame.display.update(rects[i[0]][i[1]])
         spotsToCheck = []
     elif len(spotsToCheck) != placeNumber:
-        print("Boat not long enough")
+        
         for i in spotsToCheck:
             pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
             pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
@@ -582,9 +598,11 @@ def winState():
     black = (0,0,0)
     disp.fill(l_blue)
     largeText = pygame.font.Font('freesansbold.ttf',65)
-    TextSurf, TextRect = text_objects("Winner!", largeText)
+    text = winner + " wins!"
+    TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((disp_width/2),(disp_height*.15))
-
+    
+    
 
 setupWelcome()
 
