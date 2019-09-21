@@ -88,14 +88,21 @@ def createRects(x, y):
     divX = interval + x
     divY = interval + y
     rects = [[0 for x in range(8)] for y in range(8)]
+    letter_label=pygame.font.SysFont('Ariel', 20)
+    alphabet = "ABCDEFGHIJKLMNOP"
+    numbers = "123456789"
     for i in range(0, 8):
+        letter_label_display=letter_label.render(numbers[i], False, (0, 0, 0))
+        disp.blit(letter_label_display, (divX - 12, divY + 7))
         for j in range(0, 8):
+            if(i == 0):
+                letter_label_display=letter_label.render(alphabet[j], False, (0, 0, 0))
+                disp.blit(letter_label_display, (divX + 12, divY - 12))
             rects[i][j] = pygame.Rect(divX, divY, interval, interval)
             pygame.draw.rect(disp, (0, 0, 0), rects[i][j], 2)
             divX += interval
         divX = interval + x
         divY += interval
-
     pygame.display.update()
     return rects
 
