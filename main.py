@@ -17,7 +17,7 @@ draw_once=True
 gameState = "welcome"
 winner = "null"
 numberOfBoats = 4
-
+num_destroyed = 0
 numberOfBoats = 0
 player1 = Player()
 player2 = Player()
@@ -663,7 +663,8 @@ def winState():
     text = winner + " wins!"
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((disp_width/2),(disp_height*.15))
-
+    disp.blit(TextSurf, TextRect)
+    pygame.display.update()
 
 
 setupWelcome()
@@ -673,6 +674,7 @@ while True:
     if gameState == "welcome":
         trackPlayButton()
         getSize()
+        num_destroyed = numberOfBoats
         if numberOfBoats <= 5 and numberOfBoats > 0:
             trackPlayButton()
         trackQuitButton()
@@ -703,7 +705,7 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
-        if player1.shipsDestroyed() == numberOfBoats:
+        if player1.shipsDestroyed() == num_destroyed:
             winner = "Player 2"
             gameState = "winner"
 
@@ -719,7 +721,7 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
-        if player2.shipsDestroyed() == 2:
+        if player2.shipsDestroyed() == num_destroyed:
             winner = "Player 1"
             gameState = "winner"
     elif gameState == "winner":
