@@ -1,4 +1,4 @@
-#from board import board 
+from board import board 
 from boats import Boat
 import copy
 
@@ -29,10 +29,10 @@ class Player:
 	
 
 	def placeShip(self, ship):		
-		"""Places a ship on the player's board
+		"""Places a ship in the player's ship list
 
         Args:
-        ship - the ship object that needs to be placed on the board
+        ship - the ship object that needs to be placed 
 
         Returns:
         Returns true if the ship could be placed, false otherwise
@@ -40,7 +40,6 @@ class Player:
 		if ship.validPlace(ship.getCoordinates()):
 			self.shipList.append(ship)
 			self.shipCoordinateList.append(ship.getCoordinates())
-			#self.myBoard.place(location)
 			return True			
 		else:
 			#print("Invalid placement")
@@ -91,7 +90,7 @@ class Player:
 				return False
 				
 	def setOpBoard(opBoard):
-		"""Copies oponent'ss board for this player
+		"""Copies oponent's board for this player
 
         Args:
         opBoard - oponent's board object
@@ -101,7 +100,14 @@ class Player:
         """
 		self.opBoard = copy.deepcopy(opBoard)
 		
+	def getMyBoard(self):
+		return self.myBoard
 		
-			
+	def getOpBoard(self):
+		return self.opBoard
+	
+	def addToBoard(self):
+		self.MyBoard.populateBoard(self.shipList)
+		
 		
 	
