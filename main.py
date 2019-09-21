@@ -3,7 +3,7 @@ import pygame.gfxdraw
 from pygame.locals import *
 from boats import Boat
 from executive import Executive 
-
+from player import Player
 pygame.init()
 
 disp_width = 1080
@@ -19,7 +19,8 @@ gameState = "welcome"
 numberOfBoats = 4
 
 numberOfBoats = 0
-
+player1 = Player()
+player2 = Player()
 placeNumber = 1
 spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
 
@@ -27,7 +28,7 @@ grid = None
 leftGrid = None
 rightGrid = None
 
-# vaiables used when gameState = "gamePlay"
+# variables used when gameState = "gamePlay"
 checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
 toggled=False
 
@@ -510,6 +511,16 @@ def setupGamePlay2():
     rightGrid = createRects(500, 200)
     gameState = "gamePlay2"
 
+def winState():
+    """ Lets the player know that they won """
+    l_blue = (80, 171, 250)
+    white = (255, 255, 255)
+    black = (0,0,0)
+    disp.fill(l_blue)
+    largeText = pygame.font.Font('freesansbold.ttf',65)
+    TextSurf, TextRect = text_objects("Winner!", largeText)
+    TextRect.center = ((disp_width/2),(disp_height*.15))
+
 
 setupWelcome()
 
@@ -549,6 +560,7 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
+        
     elif gameState == "gamePlay2":
         printRects2(leftGrid)
         printRects1(rightGrid)
@@ -561,4 +573,6 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
+    elif gameState == "winner":
+        winState()
     clock.tick(30)
