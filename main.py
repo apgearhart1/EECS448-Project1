@@ -262,7 +262,7 @@ def trackPlacement(rects):
                     pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
 
-    elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) != 0:
+    elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) == placeNumber:
         newPress = True
         print("spotsToCheck:", spotsToCheck)
         B = Boat()
@@ -282,7 +282,13 @@ def trackPlacement(rects):
                 pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
                 pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
                 pygame.display.update(rects[i[0]][i[1]])
-
+        spotsToCheck = []
+    elif len(spotsToCheck) != placeNumber:
+        print("Boat not long enough")
+        for i in spotsToCheck:
+            pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
+            pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
+            pygame.display.update(rects[i[0]][i[1]])
         spotsToCheck = []
 
 def trackPlayButton():
