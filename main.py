@@ -89,14 +89,21 @@ def createRects(x, y):
     divX = interval + x
     divY = interval + y
     rects = [[0 for x in range(8)] for y in range(8)]
+    letter_label=pygame.font.SysFont('Ariel', 20)
+    alphabet = "ABCDEFGHIJKLMNOP"
+    numbers = "123456789"
     for i in range(0, 8):
+        letter_label_display=letter_label.render(numbers[i], False, (0, 0, 0))
+        disp.blit(letter_label_display, (divX - 12, divY + 7))
         for j in range(0, 8):
+            if(i == 0):
+                letter_label_display=letter_label.render(alphabet[j], False, (0, 0, 0))
+                disp.blit(letter_label_display, (divX + 12, divY - 12))
             rects[i][j] = pygame.Rect(divX, divY, interval, interval)
             pygame.draw.rect(disp, (0, 0, 0), rects[i][j], 2)
             divX += interval
         divX = interval + x
         divY += interval
-
     pygame.display.update()
     return rects
 
@@ -233,10 +240,12 @@ def track_toggle() :
                 checkbox=pygame.draw.rect(disp, (0, 0, 0), (533, 200, 15, 15))
                 pygame.display.update(pygame.Rect(533, 200, 15, 15))
                 toggled=True
+                pygame.time.delay(250)
             else:
                 checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
                 pygame.display.update(pygame.Rect(533, 200, 15, 15))
                 toggled=False
+                pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
@@ -552,6 +561,26 @@ def setupGamePlay1():
     disp.fill((192, 192, 192))
     pygame.display.set_caption('Battleboats')
     player_turn=pygame.font.SysFont('Consolas', 40)
+    
+    player_switch=pygame.font.SysFont('Consolas', 40)
+    player_switch_display=player_switch.render("Player 1's Turn in ", False, (0, 0, 0))
+    count3=player_switch.render("3", False, (0, 0, 0))
+    count2=player_switch.render("2", False, (0, 0, 0))
+    count1=player_switch.render("1", False, (0, 0, 0))
+    disp.blit(player_switch_display, (300, 100))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count3, (500,150))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count2, (500,200))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count1, (500,250))
+    pygame.display.update()
+    pygame.time.delay(500)
+
+    disp.fill((192, 192, 192))
     player_turn_display=player_turn.render("PLAYER 1's TURN", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
     toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
@@ -578,6 +607,26 @@ def setupGamePlay2():
     disp.fill((192, 192, 192))
     pygame.display.set_caption('Battleboats')
     player_turn=pygame.font.SysFont('Consolas', 40)
+       
+    player_switch=pygame.font.SysFont('Consolas', 40)
+    player_switch_display=player_switch.render("Player 2's Turn in ", False, (0, 0, 0))
+    count3=player_switch.render("3", False, (0, 0, 0))
+    count2=player_switch.render("2", False, (0, 0, 0))
+    count1=player_switch.render("1", False, (0, 0, 0))
+    disp.blit(player_switch_display, (300, 100))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count3, (500,150))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count2, (500,200))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count1, (500,250))
+    pygame.display.update()
+    pygame.time.delay(500)
+
+    disp.fill((192, 192, 192))
     player_turn_display=player_turn.render("PLAYER 2's TURN", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
     toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
