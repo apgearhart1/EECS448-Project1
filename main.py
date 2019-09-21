@@ -538,7 +538,7 @@ def setupGamePlay1():
     player_turn=pygame.font.SysFont('Consolas', 40)
     
     player_switch=pygame.font.SysFont('Consolas', 40)
-    player_switch_display=player_switch.render("Player 2's Turn in ", False, (0, 0, 0))
+    player_switch_display=player_switch.render("Player 1's Turn in ", False, (0, 0, 0))
     count3=player_switch.render("3", False, (0, 0, 0))
     count2=player_switch.render("2", False, (0, 0, 0))
     count1=player_switch.render("1", False, (0, 0, 0))
