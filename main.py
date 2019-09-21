@@ -13,7 +13,7 @@ disp = pygame.display.set_mode((disp_width, disp_height))
 disp.fill((192, 192, 192))
 pygame.display.set_caption('Battleboats')
 clock = pygame.time.Clock()
-
+draw_once=True
 gameState = "welcome"
 
 numberOfBoats = 4
@@ -151,7 +151,7 @@ def trackRects1(rects):
                     pygame.time.delay(250)
                     setupGamePlay2()
 
-        pygame.time.delay(250)
+
 
 def trackRects2(rects):
     """Tracks when a single square in a grid is pressed by the mouse for player 2
@@ -185,7 +185,6 @@ def trackRects2(rects):
                     pygame.time.delay(250)
                     setupGamePlay1()
 
-        pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
@@ -264,7 +263,7 @@ def trackPlacement(rects):
                     pygame.draw.rect(disp, (0, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
 
-    elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) != 0:
+    elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) == placeNumber:
         newPress = True
         print("spotsToCheck:", spotsToCheck)
         B = Boat()
@@ -284,7 +283,13 @@ def trackPlacement(rects):
                 pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
                 pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
                 pygame.display.update(rects[i[0]][i[1]])
-
+        spotsToCheck = []
+    elif len(spotsToCheck) != placeNumber:
+        print("Boat not long enough")
+        for i in spotsToCheck:
+            pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
+            pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
+            pygame.display.update(rects[i[0]][i[1]])
         spotsToCheck = []
 
 def trackPlayButton():
@@ -294,7 +299,7 @@ def trackPlayButton():
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouseX, mouseY = pygame.mouse.get_pos()
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.43,120,75)):
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.43,120,75)) and not numberOfBoats==0:
             setupPlaceBoats(1)
 
 
@@ -306,15 +311,20 @@ def getSize():
     Returns:
     size - Number of boats
     """
+    global draw_once
     global numberOfBoats
     white = (255, 255, 255)
     black = (0,0,0)
-    pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
-    pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
-    pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
-    pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
-    pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
-    pygame.display.update()
+    green = (0, 255, 0)
+
+    if draw_once==True:
+        pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
+        pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+        pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+        pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+        pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+        pygame.display.update()
+        draw_once=False
     largeText = pygame.font.Font('freesansbold.ttf',65)
     blackText = pygame.font.Font('freesansbold.ttf',65)
     medText = pygame.font.Font('freesansbold.ttf', 48)
@@ -339,14 +349,69 @@ def getSize():
         mouseX, mouseY = pygame.mouse.get_pos()
         if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33,disp_height*.30,70,70)):
             numberOfBoats = 1
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+85,disp_height*.30,70,70)):
+            pygame.draw.rect(disp, green ,(disp_width*.33 ,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+            TextSurf, TextRect = text_objects("1", largeText)
+            TextSurf2, TextRect2 = text_objects("2", largeText)
+            TextSurf3, TextRect3 = text_objects("3", largeText)
+            TextSurf4, TextRect4 = text_objects("4", largeText)
+            TextSurf5, TextRect5 = text_objects("5", largeText)
+            pygame.display.update()
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+85,disp_height*.30,70,70)):
             numberOfBoats = 2
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+170,disp_height*.30,70,70)):
+            pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, green ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+            TextSurf, TextRect = text_objects("1", largeText)
+            TextSurf2, TextRect2 = text_objects("2", largeText)
+            TextSurf3, TextRect3 = text_objects("3", largeText)
+            TextSurf4, TextRect4 = text_objects("4", largeText)
+            TextSurf5, TextRect5 = text_objects("5", largeText)
+            pygame.display.update()
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+170,disp_height*.30,70,70)):
             numberOfBoats = 3
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+255,disp_height*.30,70,70)):
+            pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, green ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+            TextSurf, TextRect = text_objects("1", largeText)
+            TextSurf2, TextRect2 = text_objects("2", largeText)
+            TextSurf3, TextRect3 = text_objects("3", largeText)
+            TextSurf4, TextRect4 = text_objects("4", largeText)
+            TextSurf5, TextRect5 = text_objects("5", largeText)
+            pygame.display.update()
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+255,disp_height*.30,70,70)):
             numberOfBoats = 4
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+340,disp_height*.30,70,70)):
+            pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, green ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+            TextSurf, TextRect = text_objects("1", largeText)
+            TextSurf2, TextRect2 = text_objects("2", largeText)
+            TextSurf3, TextRect3 = text_objects("3", largeText)
+            TextSurf4, TextRect4 = text_objects("4", largeText)
+            TextSurf5, TextRect5 = text_objects("5", largeText)
+            pygame.display.update()
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+340,disp_height*.30,70,70)):
             numberOfBoats = 5
+            pygame.draw.rect(disp, black ,(disp_width*.33 ,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 85,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 170,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, black ,(disp_width*.33 + 255,disp_height*.30, 70,70))
+            pygame.draw.rect(disp, green ,(disp_width*.33 + 340,disp_height*.30, 70,70))
+            TextSurf, TextRect = text_objects("1", largeText)
+            TextSurf2, TextRect2 = text_objects("2", largeText)
+            TextSurf3, TextRect3 = text_objects("3", largeText)
+            TextSurf4, TextRect4 = text_objects("4", largeText)
+            TextSurf5, TextRect5 = text_objects("5", largeText)
+            pygame.display.update()
 
     pygame.display.update()
 
@@ -474,7 +539,7 @@ def setupGamePlay1():
     player_turn=pygame.font.SysFont('Consolas', 40)
     player_turn_display=player_turn.render("PLAYER 1's TURN", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
-    toggle_display=toggle.render('  SHOW MY SHIPS', False, (0, 0, 0))
+    toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
@@ -500,7 +565,7 @@ def setupGamePlay2():
     player_turn=pygame.font.SysFont('Consolas', 40)
     player_turn_display=player_turn.render("PLAYER 2's TURN", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
-    toggle_display=toggle.render('  SHOW MY SHIPS', False, (0, 0, 0))
+    toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
@@ -526,7 +591,6 @@ setupWelcome()
 
 while True:
     event_handler()
-
     if gameState == "welcome":
         trackPlayButton()
         getSize()
