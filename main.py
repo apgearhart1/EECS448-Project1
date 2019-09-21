@@ -309,7 +309,7 @@ def trackPlacement(rects):
                 pygame.display.update(rects[i[0]][i[1]])
         spotsToCheck = []
     elif len(spotsToCheck) != placeNumber:
-        
+
         for i in spotsToCheck:
             pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
             pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
@@ -476,12 +476,23 @@ def showSwitchPlayers(originalTime):
     global gameState
 
     disp.fill((192, 192, 192))
-    font = pygame.font.SysFont("Times New Roman", 40)
-    text = font.render("Switch Players", True, (0, 128, 0))
-    disp.blit(text, (350, 100))
+    player_switch=pygame.font.SysFont('Consolas', 40)
+    player_switch_display=player_switch.render("Player 2's Turn in ", False, (0, 0, 0))
+    count3=player_switch.render("3", False, (0, 0, 0))
+    count2=player_switch.render("2", False, (0, 0, 0))
+    count1=player_switch.render("1", False, (0, 0, 0))
+    disp.blit(player_switch_display, (300, 100))
     pygame.display.update()
-    while pygame.time.get_ticks() < originalTime + 3000:
-        event_handler()
+    pygame.time.delay(500)
+    disp.blit(count3, (500,150))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count2, (500,200))
+    pygame.display.update()
+    pygame.time.delay(500)
+    disp.blit(count1, (500,250))
+    pygame.display.update()
+    pygame.time.delay(500)
 
     setupPlaceBoats(2)
 
@@ -561,7 +572,7 @@ def setupGamePlay1():
     disp.fill((192, 192, 192))
     pygame.display.set_caption('Battleboats')
     player_turn=pygame.font.SysFont('Consolas', 40)
-    
+
     player_switch=pygame.font.SysFont('Consolas', 40)
     player_switch_display=player_switch.render("Player 1's Turn in ", False, (0, 0, 0))
     count3=player_switch.render("3", False, (0, 0, 0))
@@ -607,7 +618,7 @@ def setupGamePlay2():
     disp.fill((192, 192, 192))
     pygame.display.set_caption('Battleboats')
     player_turn=pygame.font.SysFont('Consolas', 40)
-       
+
     player_switch=pygame.font.SysFont('Consolas', 40)
     player_switch_display=player_switch.render("Player 2's Turn in ", False, (0, 0, 0))
     count3=player_switch.render("3", False, (0, 0, 0))
@@ -650,8 +661,8 @@ def winState():
     text = winner + " wins!"
     TextSurf, TextRect = text_objects(text, largeText)
     TextRect.center = ((disp_width/2),(disp_height*.15))
-    
-    
+
+
 
 setupWelcome()
 
@@ -690,7 +701,7 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
-        
+
     elif gameState == "gamePlay2":
         printRects2(leftGrid)
         printRects1(rightGrid)
