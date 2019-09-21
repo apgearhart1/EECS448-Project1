@@ -231,10 +231,12 @@ def track_toggle() :
                 checkbox=pygame.draw.rect(disp, (0, 0, 0), (533, 200, 15, 15))
                 pygame.display.update(pygame.Rect(533, 200, 15, 15))
                 toggled=True
+                pygame.time.delay(250)
             else:
                 checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
                 pygame.display.update(pygame.Rect(533, 200, 15, 15))
                 toggled=False
+                pygame.time.delay(250)
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
