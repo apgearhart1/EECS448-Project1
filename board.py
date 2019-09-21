@@ -1,3 +1,5 @@
+from boats import Boat
+
 class board:
     def __init__(self, rowSize, colSize):
         self.rowSize = rowSize
