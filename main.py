@@ -150,6 +150,7 @@ def trackRects1(rects):
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked1)
+                    print("destroyed", player2.shipsDestroyed())
                     if player2.shipsDestroyed() == numberOfBoats:
                         winner = "Player 1"
                         gameState = "winner"
@@ -161,7 +162,7 @@ def trackRects1(rects):
                     print(rects_clicked1)
                     pygame.time.delay(250)
                     setupGamePlay2()
-
+    
 
 
 def trackRects2(rects):
@@ -188,9 +189,6 @@ def trackRects2(rects):
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked2)
-                    if player1.shipsDestroyed() == numberOfBoats:
-                        winner = "Player 2"
-                        gameState = "winner"
                 elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked2:
                     rects_missed2.append((i,j))
                     rects_clicked2.append((i,j))
@@ -199,7 +197,7 @@ def trackRects2(rects):
                     print(rects_clicked2)
                     pygame.time.delay(250)
                     setupGamePlay1()
-
+    
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
@@ -705,6 +703,9 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
+        if player1.shipsDestroyed() == numberOfBoats:
+            winner = "Player 2"
+            gameState = "winner"
 
     elif gameState == "gamePlay2":
         printRects2(leftGrid)
@@ -718,6 +719,9 @@ while True:
             clear_board(rightGrid)
             rightGrid=createRects(500, 200)
             board_cleared=True
+        if player2.shipsDestroyed() == 2:
+            winner = "Player 1"
+            gameState = "winner"
     elif gameState == "winner":
         winState()
     clock.tick(30)

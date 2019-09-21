@@ -132,6 +132,6 @@ class Player:
 		self.myBoard.populateBoard(self.shipList)
 	
 	def addToHitList(self, i, j):
-		for i in range(0, len(self.shipList)):
-			if (i,j) in self.shipList[i].getCoordinates():
-				self.shipList[i].hit((i,j))
+		for k in range(0, len(self.shipList)):
+			if (i,j) in self.shipList[k].getCoordinates():
+				self.shipList[k].hit((i,j))
