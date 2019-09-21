@@ -63,5 +63,3 @@ class Executive:
 		if self.player2.getCoordinateList() == []:
 			return True
 		return False
-					
-			

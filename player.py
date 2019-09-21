@@ -37,13 +37,9 @@ class Player:
         Returns:
         Returns true if the ship could be placed, false otherwise
         """
-		if ship.validPlace(ship.getCoordinates()):
-			self.shipList.append(ship)
-			self.shipCoordinateList.append(ship.getCoordinates())
-			return True			
-		else:
-			#print("Invalid placement")
-			return False
+		self.shipList.append(ship)
+		self.shipCoordinateList.append(ship.getCoordinates())
+		
 			
 	def getShipList(self):
 		"""Gets the list of ships for this player

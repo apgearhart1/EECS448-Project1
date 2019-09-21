@@ -41,8 +41,8 @@ my_ships1 = []
 rects_clicked2=[]
 rects_missed2 = []
 rects_hit2 = []
-opposing_ship2 = my_ships1
-my_ships2 = opposing_ship1
+opposing_ship2 = []
+my_ships2 = []
 #game = Executive()
 
 board_cleared=True
@@ -288,19 +288,23 @@ def trackPlacement(rects):
     elif pygame.mouse.get_pressed() != (1, 0, 0) and len(spotsToCheck) == placeNumber:
         newPress = True
         print("spotsToCheck:", spotsToCheck)
-        B = Boat(len(spotsToCheck), spotsToCheck)
+        B = Boat()
         if B.validPlace(spotsToCheck):
             print("Boat Placed")
             placeNumber += 1
             updateBoatToPlaceText(placeNumber)
             if gameState == "placeBoats1":
                 player1.placeShip(B)
-                my_ships1.append(B.getCoordinates())
-                opposing_ship2.append(B.getCoordinates())
+                for i in range(len(B.getCoordinates())):
+                    my_ships1.append(B.getCoordinates()[i])
+                    opposing_ship2.append(B.getCoordinates()[i])
+                print("Myships", my_ships1)
             elif gameState == "placeBoats2":
                 player2.placeShip(B)
-                my_ships2.append(B.getCoordinates())
-                opposing_ship1.append(B.getCoordinates())
+                for i in range(len(B.getCoordinates())):
+                    my_ships2.append(B.getCoordinates()[i])
+                    opposing_ship1.append(B.getCoordinates()[i])
+                
         else:
             print("Error placing boat")
             for i in spotsToCheck:

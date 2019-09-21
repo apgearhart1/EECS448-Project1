@@ -48,6 +48,8 @@ class Boat:
         else:
             if coordinates[0][0] < 0 or coordinates[0][0] >= 8 or coordinates[0][1] < 0 or coordinates[0][1] >= 8:
                 return False
+        self.setCoordinates(coordinates)
+        self.size = len(coordinates)
         return True
 
     def checkDestroyed(self):
@@ -76,7 +78,7 @@ class Boat:
         else:
             if self.destroyed == False and coordinate not in self.hitlist:
                 self.hitlist.append(coordinate)
-            check = checkDestroyed(self)
+            check = self.checkDestroyed()
             if check == True:
                 return "Hit Confirmed & Boat is Destroyed!"
             else:
@@ -85,7 +87,7 @@ class Boat:
         """gives user coordinates of the boat
 
         Returns:
-        Returns a 2D array of the coordinates
+        Returns an array of tuples of the coordinates
         """
         return self.coordinates
     def getSize(self):
@@ -100,7 +102,7 @@ class Boat:
         """Sets coordinates of the boat
 
         Args:
-        coordinates - 2D array of coordinates
+        coordinates - array of tuples of coordinates
 
         Returns:
         None
