@@ -2,8 +2,8 @@ import pygame
 import pygame.gfxdraw
 from pygame.locals import *
 from boats import Boat
-from executive import Executive 
-from player import Player
+from executive import Executive
+
 pygame.init()
 
 disp_width = 1080
@@ -19,8 +19,7 @@ gameState = "welcome"
 numberOfBoats = 4
 
 numberOfBoats = 0
-player1 = Player()
-player2 = Player()
+
 placeNumber = 1
 spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
 
