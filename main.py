@@ -2,7 +2,7 @@ import pygame
 import pygame.gfxdraw
 from pygame.locals import *
 from boats import Boat
-from executive import Executive 
+from executive import Executive
 
 pygame.init()
 
@@ -293,7 +293,7 @@ def trackPlayButton():
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouseX, mouseY = pygame.mouse.get_pos()
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.43,120,75)):
+        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.45,disp_height*.43,120,75)) and not numberOfBoats==0:
             setupPlaceBoats(1)
 
 
@@ -338,13 +338,13 @@ def getSize():
         mouseX, mouseY = pygame.mouse.get_pos()
         if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33,disp_height*.30,70,70)):
             numberOfBoats = 1
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+85,disp_height*.30,70,70)):
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+85,disp_height*.30,70,70)):
             numberOfBoats = 2
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+170,disp_height*.30,70,70)):
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+170,disp_height*.30,70,70)):
             numberOfBoats = 3
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+255,disp_height*.30,70,70)):
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+255,disp_height*.30,70,70)):
             numberOfBoats = 4
-        if isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+340,disp_height*.30,70,70)):
+        elif isPointInRect(mouseX, mouseY, pygame.Rect(disp_width*.33+340,disp_height*.30,70,70)):
             numberOfBoats = 5
 
     pygame.display.update()
