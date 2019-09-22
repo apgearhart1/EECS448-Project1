@@ -9,7 +9,7 @@ if __name__ == "__main__":
 
     disp_width = 1080
     disp_height = 720
-
+    #globals
     disp = pygame.display.set_mode((disp_width, disp_height))
     disp.fill((192, 192, 192))
     pygame.display.set_caption('Battleboats')
@@ -24,7 +24,7 @@ if __name__ == "__main__":
     player2 = Player()
     placeNumber = 1
     spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
-
+    turn = 0
     grid = None
     leftGrid = None
     rightGrid = None
@@ -293,7 +293,7 @@ def trackPlacement(rects):
     Args:
         rects (8x8 array of pygame.Rect objects): grid to check on
     """
-
+    global turn
     global placeNumber
     global spotsToCheck
     global player1
@@ -320,7 +320,17 @@ def trackPlacement(rects):
         newPress = True
         print("spotsToCheck:", spotsToCheck)
         B = Boat()
-        if B.validPlace(spotsToCheck):
+        replace = []
+        overlap = False
+        for i in range(len(spotsToCheck)):
+            if spotsToCheck[i] in player1.getCoordinateList() and turn%2 ==0:
+                overlap = True
+                replace.append(spotsToCheck[i]) 
+            elif spotsToCheck[i] in player2.getCoordinateList() and turn%2 != 0:
+                overlap = True
+                replace.append(spotsToCheck[i]) 
+
+        if B.validPlace(spotsToCheck) and overlap == False:
             print("Boat Placed")
             placeNumber += 1
             updateBoatToPlaceText(placeNumber)
@@ -342,6 +352,9 @@ def trackPlacement(rects):
                 pygame.draw.rect(disp, (192, 192, 192), rects[i[0]][i[1]])
                 pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]], 2)
                 pygame.display.update(rects[i[0]][i[1]])
+                if overlap == True and i in replace:
+                    pygame.draw.rect(disp, (0, 0, 0), rects[i[0]][i[1]])
+                    pygame.display.update(rects[i[0]][i[1]])
         spotsToCheck = []
     elif len(spotsToCheck) != placeNumber:
 
@@ -721,6 +734,7 @@ if __name__ == "__main__":
                 trackPlacement(grid)
             else:
                 gameState = "None"
+                turn +=1
                 showSwitchPlayers(pygame.time.get_ticks())
 
         elif gameState == "placeBoats2":

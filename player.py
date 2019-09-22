@@ -38,7 +38,8 @@ class Player:
         Returns true if the ship could be placed, false otherwise
         """
 		self.shipList.append(ship)
-		self.shipCoordinateList.append(ship.getCoordinates())
+		for i in range(len(ship.getCoordinates())):
+			self.shipCoordinateList.append(ship.getCoordinates()[i])
 		
 			
 	def getShipList(self):
