@@ -49,6 +49,8 @@ if __name__ == "__main__":
     board_cleared=True
 
 def quitGame():
+    """Closes the game window"""
+
     pygame.quit()
     quit()
 
@@ -109,10 +111,23 @@ def createRects(x, y):
     return rects
 
 def text_objects(text, font): #function used from https://pythonprogramming.net/pygame-start-menu-tutorial/
+    """Creates a text object
+
+    Args:
+    text: the string to display
+    font: the style of the text
+    """
+
     textSurface = font.render(text, True, (255, 255, 255))
     return textSurface, textSurface.get_rect()
 
 def showboat1(rects):
+    """Shows player 1's own boats after pressing the toggle button
+
+    Args:
+    rects: (8x8 array of pygame.Rect objects): the grid to check on
+    """
+
     for i in range(0, 8):
         for j in range(0, 8):
             if(i,j) in my_ships1:
@@ -120,6 +135,11 @@ def showboat1(rects):
                 pygame.display.update(rects[i][j])
 
 def showboat2(rects):
+    """Shows player 2's own boats after pressing the toggle button
+
+    Args:
+    rects: (8x8 array of pygame.Rect objects): the grid to check on
+    """
     for i in range(0, 8):
         for j in range(0, 8):
             if(i,j) in my_ships2:
@@ -132,7 +152,7 @@ def trackRects1(rects):
     """Tracks when a single square in a grid is pressed by the mouse for player 1
 
     Args:
-        rects (8x8 array of pygame.Rect objects): the grid to check on
+        rects: (8x8 array of pygame.Rect objects): the grid to check on
     """
     global winner
     newPress = True
@@ -236,6 +256,12 @@ def trackRects2(rects):
         newPress = True
 
 def printRects1(rects):
+    """Draws the squares on the board that have been hit or missed for player 1
+
+    Args:
+        rects (8x8 array of pygame.Rect objects): the grid to check on
+    """
+
     for i in range(0,8):
         for j in range(0,8):
             if (i,j) in rects_hit1:
@@ -246,6 +272,12 @@ def printRects1(rects):
                 pygame.display.update(rects[i][j])
 
 def printRects2(rects):
+    """Draws the squares on the board that have been hit or missed for player 2
+
+    Args:
+        rects (8x8 array of pygame.Rect objects): the grid to check on
+    """
+
     for i in range(0,8):
         for j in range(0,8):
             if (i,j) in rects_hit2:
@@ -257,6 +289,8 @@ def printRects2(rects):
 
 
 def track_toggle() :
+    """Tracks when the toggle square is pressed by the mouse"""
+
     global toggled
     newPress = True
     mouseX = 0
@@ -282,6 +316,11 @@ def track_toggle() :
         newPress = True
 
 def clear_board(rects):
+    """Clears the board of all squares - intended to be used after showing the players own boats
+
+    Args:
+        rects (8x8 array of pygame.Rect objects): the grid to check on
+    """
     for i in range(0, 8):
         for j in range(0, 8):
             pygame.draw.rect(disp, (192, 192, 192), rects[i][j])
@@ -475,8 +514,8 @@ def getSize():
     pygame.display.update()
 
 
-    """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
 def trackQuitButton():
+    """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouseX, mouseY = pygame.mouse.get_pos()
