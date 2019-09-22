@@ -49,6 +49,8 @@ if __name__ == "__main__":
     board_cleared=True
 
 def quitGame():
+    """Closes the game window"""
+
     pygame.quit()
     quit()
 
@@ -109,10 +111,23 @@ def createRects(x, y):
     return rects
 
 def text_objects(text, font): #function used from https://pythonprogramming.net/pygame-start-menu-tutorial/
+    """Creates a text object
+
+    Args:
+    text: the string to display
+    font: the style of the text
+    """
+
     textSurface = font.render(text, True, (255, 255, 255))
     return textSurface, textSurface.get_rect()
 
 def showboat1(rects):
+    """Shows player 1's own boats after pressing the toggle button
+
+    Args:
+    rects: (8x8 array of pygame.Rect objects): the grid to check on
+    """
+
     for i in range(0, 8):
         for j in range(0, 8):
             if(i,j) in my_ships1:
@@ -120,6 +135,11 @@ def showboat1(rects):
                 pygame.display.update(rects[i][j])
 
 def showboat2(rects):
+    """Shows player 2's own boats after pressing the toggle button
+
+    Args:
+    rects: (8x8 array of pygame.Rect objects): the grid to check on
+    """
     for i in range(0, 8):
         for j in range(0, 8):
             if(i,j) in my_ships2:
@@ -132,7 +152,7 @@ def trackRects1(rects):
     """Tracks when a single square in a grid is pressed by the mouse for player 1
 
     Args:
-        rects (8x8 array of pygame.Rect objects): the grid to check on
+        rects: (8x8 array of pygame.Rect objects): the grid to check on
     """
     global winner
     newPress = True
@@ -236,6 +256,12 @@ def trackRects2(rects):
         newPress = True
 
 def printRects1(rects):
+    """Draws the squares on the board that have been hit or missed for player 1
+
+    Args:
+        rects (8x8 array of pygame.Rect objects): the grid to check on
+    """
+
     for i in range(0,8):
         for j in range(0,8):
             if (i,j) in rects_hit1:
@@ -246,6 +272,12 @@ def printRects1(rects):
                 pygame.display.update(rects[i][j])
 
 def printRects2(rects):
+    """Draws the squares on the board that have been hit or missed for player 2
+
+    Args:
+        rects (8x8 array of pygame.Rect objects): the grid to check on
+    """
+
     for i in range(0,8):
         for j in range(0,8):
             if (i,j) in rects_hit2:
@@ -257,6 +289,8 @@ def printRects2(rects):
 
 
 def track_toggle() :
+    """Tracks when the toggle square is pressed by the mouse"""
+
     global toggled
     newPress = True
     mouseX = 0
@@ -282,6 +316,11 @@ def track_toggle() :
         newPress = True
 
 def clear_board(rects):
+    """Clears the board of all squares - intended to be used after showing the players own boats
+
+    Args:
+        rects (8x8 array of pygame.Rect objects): the grid to check on
+    """
     for i in range(0, 8):
         for j in range(0, 8):
             pygame.draw.rect(disp, (192, 192, 192), rects[i][j])
@@ -488,8 +527,8 @@ def getSize():
     pygame.display.update()
 
 
-    """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
 def trackQuitButton():
+    """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouseX, mouseY = pygame.mouse.get_pos()
@@ -504,12 +543,12 @@ def updateBoatToPlaceText(size):
         size (int): should corresponds to size of current boat to place (e.g. global placeNumber)
     """
 
-    disp.fill((192, 192, 192), (350, 135, 200, 40))
-    pygame.display.update((350, 135, 200, 40))
+    disp.fill((192, 192, 192), (350, 150, 200, 40))
+    pygame.display.update((350, 150, 200, 40))
     font = pygame.font.SysFont("Times New Roman", 30)
-    text = font.render("Boat size to place: " + str(size), True, (0, 128, 0))
-    disp.blit(text, (350, 135))
-    pygame.display.update((350, 135, 200, 40))
+    text = font.render("Boat size to place: " + str(size), True, (0, 0, 0))
+    disp.blit(text, (350, 150))
+    pygame.display.update((350, 150, 200, 40))
 
 def showSwitchPlayers(originalTime):
     """ Displays the screen that tells players to switch. Gives players three seconds to do so.
@@ -596,7 +635,7 @@ def setupPlaceBoats(whichPlayer):
     disp.fill((192, 192, 192))
 
     font = pygame.font.SysFont("Times New Roman", 40)
-    text = font.render("Player " + str(whichPlayer) + ": " + "Place your " + str(numberOfBoats) + " boats", True, (0, 128, 0))
+    text = font.render("Player " + str(whichPlayer) + ": " + "Place your " + str(numberOfBoats) + " boats", True, (0, 0, 0))
     disp.blit(text, (350, 100))
 
     updateBoatToPlaceText(1)
@@ -627,7 +666,7 @@ def setupGamePlay1():
     count3=player_switch.render("3", False, (0, 0, 0))
     count2=player_switch.render("2", False, (0, 0, 0))
     count1=player_switch.render("1", False, (0, 0, 0))
-    disp.blit(player_switch_display, (300, 100))
+    disp.blit(player_switch_display, (320, 100))
     pygame.display.update()
     pygame.time.delay(500)
     disp.blit(count3, (500,150))
@@ -641,14 +680,14 @@ def setupGamePlay1():
     pygame.time.delay(500)
 
     disp.fill((192, 192, 192))
-    player_turn_display=player_turn.render("PLAYER 1's TURN", False, (0, 0, 0))
+    player_turn_display=player_turn.render("Player 1's Turn", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
     toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
     track_toggle()
-    disp.blit(player_turn_display, (350, 0))
+    disp.blit(player_turn_display, (350, 100))
     disp.blit(toggle_display, (548,200))
     leftGrid = createRects(200, 200)
     rightGrid = createRects(500, 200)
@@ -673,7 +712,7 @@ def setupGamePlay2():
     count3=player_switch.render("3", False, (0, 0, 0))
     count2=player_switch.render("2", False, (0, 0, 0))
     count1=player_switch.render("1", False, (0, 0, 0))
-    disp.blit(player_switch_display, (300, 100))
+    disp.blit(player_switch_display, (320, 100))
     pygame.display.update()
     pygame.time.delay(500)
     disp.blit(count3, (500,150))
@@ -687,14 +726,14 @@ def setupGamePlay2():
     pygame.time.delay(500)
 
     disp.fill((192, 192, 192))
-    player_turn_display=player_turn.render("PLAYER 2's TURN", False, (0, 0, 0))
+    player_turn_display=player_turn.render("Player 2's Turn", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
     toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
     track_toggle()
-    disp.blit(player_turn_display, (350, 0))
+    disp.blit(player_turn_display, (350, 100))
     disp.blit(toggle_display, (548,200))
     leftGrid = createRects(200, 200)
     rightGrid = createRects(500, 200)
@@ -709,7 +748,7 @@ def winState():
     largeText = pygame.font.Font('freesansbold.ttf',65)
     text = winner + " wins!"
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((disp_width/2),(disp_height*.15))
+    TextRect.center = ((disp_width/2),(disp_height*.33))
     disp.blit(TextSurf, TextRect)
     pygame.display.update()
     gameState="winner"

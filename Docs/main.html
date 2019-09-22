@@ -18,7 +18,10 @@
 <font color="#ffffff" face="helvetica, arial"><big><strong>Functions</strong></big></font></td></tr>
     
 <tr><td bgcolor="#eeaa77"><tt>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</tt></td><td>&nbsp;</td>
-<td width="100%"><dl><dt><a name="-clear_board"><strong>clear_board</strong></a>(rects)</dt></dl>
+<td width="100%"><dl><dt><a name="-clear_board"><strong>clear_board</strong></a>(rects)</dt><dd><tt>Clears&nbsp;the&nbsp;board&nbsp;of&nbsp;all&nbsp;squares&nbsp;-&nbsp;intended&nbsp;to&nbsp;be&nbsp;used&nbsp;after&nbsp;showing&nbsp;the&nbsp;players&nbsp;own&nbsp;boats<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rects&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
  <dl><dt><a name="-createRects"><strong>createRects</strong></a>(x, y)</dt><dd><tt>Creates&nbsp;an&nbsp;8x8&nbsp;grid&nbsp;of&nbsp;squares<br>
 &nbsp;<br>
 Args:<br>
@@ -43,9 +46,15 @@ rect&nbsp;(pygame.Rect):&nbsp;object&nbsp;to&nbsp;see&nbsp;if&nbsp;x&nbsp;any&nb
 &nbsp;<br>
 Returns:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;bool:&nbsp;True&nbsp;if&nbsp;x&nbsp;and&nbsp;y&nbsp;are&nbsp;in&nbsp;rect,&nbsp;False&nbsp;otherwise</tt></dd></dl>
- <dl><dt><a name="-printRects1"><strong>printRects1</strong></a>(rects)</dt></dl>
- <dl><dt><a name="-printRects2"><strong>printRects2</strong></a>(rects)</dt></dl>
- <dl><dt><a name="-quitGame"><strong>quitGame</strong></a>()</dt></dl>
+ <dl><dt><a name="-printRects1"><strong>printRects1</strong></a>(rects)</dt><dd><tt>Draws&nbsp;the&nbsp;squares&nbsp;on&nbsp;the&nbsp;board&nbsp;that&nbsp;have&nbsp;been&nbsp;hit&nbsp;or&nbsp;missed&nbsp;for&nbsp;player&nbsp;1<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rects&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
+ <dl><dt><a name="-printRects2"><strong>printRects2</strong></a>(rects)</dt><dd><tt>Draws&nbsp;the&nbsp;squares&nbsp;on&nbsp;the&nbsp;board&nbsp;that&nbsp;have&nbsp;been&nbsp;hit&nbsp;or&nbsp;missed&nbsp;for&nbsp;player&nbsp;2<br>
+&nbsp;<br>
+Args:<br>
+&nbsp;&nbsp;&nbsp;&nbsp;rects&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
+ <dl><dt><a name="-quitGame"><strong>quitGame</strong></a>()</dt><dd><tt>Closes&nbsp;the&nbsp;game&nbsp;window</tt></dd></dl>
  <dl><dt><a name="-setupGamePlay1"><strong>setupGamePlay1</strong></a>()</dt><dd><tt>Sets&nbsp;up&nbsp;initial&nbsp;graphics&nbsp;and&nbsp;variables&nbsp;for&nbsp;the&nbsp;gamePlay&nbsp;state</tt></dd></dl>
  <dl><dt><a name="-setupGamePlay2"><strong>setupGamePlay2</strong></a>()</dt><dd><tt>Sets&nbsp;up&nbsp;initial&nbsp;graphics&nbsp;and&nbsp;variables&nbsp;for&nbsp;the&nbsp;gamePlay&nbsp;state</tt></dd></dl>
  <dl><dt><a name="-setupPlaceBoats"><strong>setupPlaceBoats</strong></a>(whichPlayer)</dt><dd><tt>Sets&nbsp;up&nbsp;initial&nbsp;graphics&nbsp;and&nbsp;variables&nbsp;for&nbsp;the&nbsp;placeBoats&nbsp;state<br>
@@ -59,9 +68,19 @@ Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;originalTime&nbsp;(pygame.time.get_ticks()):&nbsp;represents&nbsp;the&nbsp;original&nbsp;time&nbsp;(in&nbsp;systicks,&nbsp;represented&nbsp;as&nbsp;int)<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;that&nbsp;this&nbsp;method&nbsp;was&nbsp;called.&nbsp;It&nbsp;is&nbsp;used&nbsp;agains&nbsp;the&nbsp;current<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;time&nbsp;in&nbsp;systics&nbsp;to&nbsp;see&nbsp;if&nbsp;three&nbsp;seconds&nbsp;has&nbsp;passed</tt></dd></dl>
- <dl><dt><a name="-showboat1"><strong>showboat1</strong></a>(rects)</dt></dl>
- <dl><dt><a name="-showboat2"><strong>showboat2</strong></a>(rects)</dt></dl>
- <dl><dt><a name="-text_objects"><strong>text_objects</strong></a>(text, font)</dt></dl>
+ <dl><dt><a name="-showboat1"><strong>showboat1</strong></a>(rects)</dt><dd><tt>Shows&nbsp;player&nbsp;1's&nbsp;own&nbsp;boats&nbsp;after&nbsp;pressing&nbsp;the&nbsp;toggle&nbsp;button<br>
+&nbsp;<br>
+Args:<br>
+rects:&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
+ <dl><dt><a name="-showboat2"><strong>showboat2</strong></a>(rects)</dt><dd><tt>Shows&nbsp;player&nbsp;2's&nbsp;own&nbsp;boats&nbsp;after&nbsp;pressing&nbsp;the&nbsp;toggle&nbsp;button<br>
+&nbsp;<br>
+Args:<br>
+rects:&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
+ <dl><dt><a name="-text_objects"><strong>text_objects</strong></a>(text, font)</dt><dd><tt>Creates&nbsp;a&nbsp;text&nbsp;object<br>
+&nbsp;<br>
+Args:<br>
+text:&nbsp;the&nbsp;string&nbsp;to&nbsp;display<br>
+font:&nbsp;the&nbsp;style&nbsp;of&nbsp;the&nbsp;text</tt></dd></dl>
  <dl><dt><a name="-trackPlacement"><strong>trackPlacement</strong></a>(rects)</dt><dd><tt>tracks&nbsp;the&nbsp;placement&nbsp;of&nbsp;boats&nbsp;on&nbsp;the&nbsp;placeBoats&nbsp;screens&nbsp;for&nbsp;player&nbsp;1&nbsp;and&nbsp;2<br>
 &nbsp;<br>
 Args:<br>
@@ -71,12 +90,12 @@ Args:<br>
  <dl><dt><a name="-trackRects1"><strong>trackRects1</strong></a>(rects)</dt><dd><tt>Tracks&nbsp;when&nbsp;a&nbsp;single&nbsp;square&nbsp;in&nbsp;a&nbsp;grid&nbsp;is&nbsp;pressed&nbsp;by&nbsp;the&nbsp;mouse&nbsp;for&nbsp;player&nbsp;1<br>
 &nbsp;<br>
 Args:<br>
-&nbsp;&nbsp;&nbsp;&nbsp;rects&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
+&nbsp;&nbsp;&nbsp;&nbsp;rects:&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
  <dl><dt><a name="-trackRects2"><strong>trackRects2</strong></a>(rects)</dt><dd><tt>Tracks&nbsp;when&nbsp;a&nbsp;single&nbsp;square&nbsp;in&nbsp;a&nbsp;grid&nbsp;is&nbsp;pressed&nbsp;by&nbsp;the&nbsp;mouse&nbsp;for&nbsp;player&nbsp;2<br>
 &nbsp;<br>
 Args:<br>
 &nbsp;&nbsp;&nbsp;&nbsp;rects&nbsp;(8x8&nbsp;array&nbsp;of&nbsp;pygame.Rect&nbsp;objects):&nbsp;the&nbsp;grid&nbsp;to&nbsp;check&nbsp;on</tt></dd></dl>
- <dl><dt><a name="-track_toggle"><strong>track_toggle</strong></a>()</dt></dl>
+ <dl><dt><a name="-track_toggle"><strong>track_toggle</strong></a>()</dt><dd><tt>Tracks&nbsp;when&nbsp;the&nbsp;toggle&nbsp;square&nbsp;is&nbsp;pressed&nbsp;by&nbsp;the&nbsp;mouse</tt></dd></dl>
  <dl><dt><a name="-updateBoatToPlaceText"><strong>updateBoatToPlaceText</strong></a>(size)</dt><dd><tt>Every&nbsp;time&nbsp;this&nbsp;is&nbsp;called,&nbsp;the&nbsp;text&nbsp;that&nbsp;says&nbsp;"Boat&nbsp;size&nbsp;to&nbsp;place..."&nbsp;on&nbsp;gameState&nbsp;=&nbsp;"placeBoats1"<br>
 &nbsp;&nbsp;&nbsp;&nbsp;or&nbsp;gameState&nbsp;=&nbsp;"placeBoats2"&nbsp;will&nbsp;get&nbsp;redrawn&nbsp;with&nbsp;the&nbsp;new&nbsp;size&nbsp;shown<br>
 &nbsp;<br>
