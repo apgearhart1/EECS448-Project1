@@ -1,51 +1,52 @@
-import pygame
-import pygame.gfxdraw
-from pygame.locals import *
-from boats import Boat
-from executive import Executive
-from player import Player
-pygame.init()
+if __name__ == "__main__":
+    import pygame
+    import pygame.gfxdraw
+    from pygame.locals import *
+    from boats import Boat
+    from executive import Executive
+    from player import Player
+    pygame.init()
 
-disp_width = 1080
-disp_height = 720
+    disp_width = 1080
+    disp_height = 720
 
-disp = pygame.display.set_mode((disp_width, disp_height))
-disp.fill((192, 192, 192))
-pygame.display.set_caption('Battleboats')
-clock = pygame.time.Clock()
-draw_once=True
-gameState = "welcome"
-winner = "null"
-numberOfBoats = 4
-num_destroyed = 0
-numberOfBoats = 0
-player1 = Player()
-player2 = Player()
-placeNumber = 1
-spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
+    disp = pygame.display.set_mode((disp_width, disp_height))
+    disp.fill((192, 192, 192))
+    pygame.display.set_caption('Battleboats')
+    clock = pygame.time.Clock()
+    draw_once=True
+    gameState = "welcome"
+    winner = "null"
+    numberOfBoats = 4
+    num_destroyed = 0
+    numberOfBoats = 0
+    player1 = Player()
+    player2 = Player()
+    placeNumber = 1
+    spotsToCheck = [] #[[0 for x in range(2)] for y in range(placeNumber)]
 
-grid = None
-leftGrid = None
-rightGrid = None
+    grid = None
+    leftGrid = None
+    rightGrid = None
 
-# variables used when gameState = "gamePlay"
-checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
-toggled=False
+    # variables used when gameState = "gamePlay"
+    checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
+    toggled=False
 
-rects_clicked1=[]
-rects_missed1 = []
-rects_hit1 = []
-opposing_ship1 = []
-my_ships1 = []
+    rects_clicked1=[]
+    rects_missed1 = []
+    rects_hit1 = []
+    opposing_ship1 = []
+    my_ships1 = []
 
-rects_clicked2=[]
-rects_missed2 = []
-rects_hit2 = []
-opposing_ship2 = []
-my_ships2 = []
-#game = Executive()
+    rects_clicked2=[]
+    rects_missed2 = []
+    rects_hit2 = []
+    opposing_ship2 = []
+    my_ships2 = []
+    #game = Executive()
 
-board_cleared=True
+    board_cleared=True
 
 def quitGame():
     pygame.quit()
@@ -693,64 +694,64 @@ def winState():
     disp.blit(TextSurf, TextRect)
     pygame.display.update()
 
+if __name__ == "__main__":
+    setupWelcome()
 
-setupWelcome()
-
-while True:
-    event_handler()
-    if gameState == "welcome":
-        trackPlayButton()
-        getSize()
-        num_destroyed = numberOfBoats
-        if numberOfBoats <= 5 and numberOfBoats > 0:
+    while True:
+        event_handler()
+        if gameState == "welcome":
             trackPlayButton()
-        trackQuitButton()
+            getSize()
+            num_destroyed = numberOfBoats
+            if numberOfBoats <= 5 and numberOfBoats > 0:
+                trackPlayButton()
+            trackQuitButton()
 
-    elif gameState == "placeBoats1":
-        if placeNumber <= numberOfBoats:
-            trackPlacement(grid)
-        else:
-            gameState = "None"
-            showSwitchPlayers(pygame.time.get_ticks())
+        elif gameState == "placeBoats1":
+            if placeNumber <= numberOfBoats:
+                trackPlacement(grid)
+            else:
+                gameState = "None"
+                showSwitchPlayers(pygame.time.get_ticks())
 
-    elif gameState == "placeBoats2":
-        if placeNumber <= numberOfBoats:
-            trackPlacement(grid)
-        else:
-            gameState = "None"
-            setupGamePlay1()
+        elif gameState == "placeBoats2":
+            if placeNumber <= numberOfBoats:
+                trackPlacement(grid)
+            else:
+                gameState = "None"
+                setupGamePlay1()
 
-    elif gameState == "gamePlay1":
-        printRects1(leftGrid)
-        printRects2(rightGrid)
-        trackRects1(leftGrid)
-        track_toggle()
-        if toggled and board_cleared:
-            showboat1(rightGrid)
-            board_cleared=False
-        if not toggled and not board_cleared:
-            clear_board(rightGrid)
-            rightGrid=createRects(500, 200)
-            board_cleared=True
-        if player1.shipsDestroyed() == num_destroyed:
-            winner = "Player 2"
-            gameState = "winner"
+        elif gameState == "gamePlay1":
+            printRects1(leftGrid)
+            printRects2(rightGrid)
+            trackRects1(leftGrid)
+            track_toggle()
+            if toggled and board_cleared:
+                showboat1(rightGrid)
+                board_cleared=False
+            if not toggled and not board_cleared:
+                clear_board(rightGrid)
+                rightGrid=createRects(500, 200)
+                board_cleared=True
+            if player1.shipsDestroyed() == num_destroyed:
+                winner = "Player 2"
+                gameState = "winner"
 
-    elif gameState == "gamePlay2":
-        printRects2(leftGrid)
-        printRects1(rightGrid)
-        trackRects2(leftGrid)
-        track_toggle()
-        if toggled and board_cleared:
-            showboat2(rightGrid)
-            board_cleared=False
-        if not toggled and not board_cleared:
-            clear_board(rightGrid)
-            rightGrid=createRects(500, 200)
-            board_cleared=True
-        if player2.shipsDestroyed() == num_destroyed:
-            winner = "Player 1"
-            gameState = "winner"
-    elif gameState == "winner":
-        winState()
-    clock.tick(30)
+        elif gameState == "gamePlay2":
+            printRects2(leftGrid)
+            printRects1(rightGrid)
+            trackRects2(leftGrid)
+            track_toggle()
+            if toggled and board_cleared:
+                showboat2(rightGrid)
+                board_cleared=False
+            if not toggled and not board_cleared:
+                clear_board(rightGrid)
+                rightGrid=createRects(500, 200)
+                board_cleared=True
+            if player2.shipsDestroyed() == num_destroyed:
+                winner = "Player 1"
+                gameState = "winner"
+        elif gameState == "winner":
+            winState()
+        clock.tick(30)
