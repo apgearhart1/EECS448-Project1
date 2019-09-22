@@ -491,12 +491,12 @@ def updateBoatToPlaceText(size):
         size (int): should corresponds to size of current boat to place (e.g. global placeNumber)
     """
 
-    disp.fill((192, 192, 192), (350, 135, 200, 40))
-    pygame.display.update((350, 135, 200, 40))
+    disp.fill((192, 192, 192), (350, 150, 200, 40))
+    pygame.display.update((350, 150, 200, 40))
     font = pygame.font.SysFont("Times New Roman", 30)
-    text = font.render("Boat size to place: " + str(size), True, (0, 128, 0))
-    disp.blit(text, (350, 135))
-    pygame.display.update((350, 135, 200, 40))
+    text = font.render("Boat size to place: " + str(size), True, (0, 0, 0))
+    disp.blit(text, (350, 150))
+    pygame.display.update((350, 150, 200, 40))
 
 def showSwitchPlayers(originalTime):
     """ Displays the screen that tells players to switch. Gives players three seconds to do so.
@@ -583,7 +583,7 @@ def setupPlaceBoats(whichPlayer):
     disp.fill((192, 192, 192))
 
     font = pygame.font.SysFont("Times New Roman", 40)
-    text = font.render("Player " + str(whichPlayer) + ": " + "Place your " + str(numberOfBoats) + " boats", True, (0, 128, 0))
+    text = font.render("Player " + str(whichPlayer) + ": " + "Place your " + str(numberOfBoats) + " boats", True, (0, 0, 0))
     disp.blit(text, (350, 100))
 
     updateBoatToPlaceText(1)
@@ -614,7 +614,7 @@ def setupGamePlay1():
     count3=player_switch.render("3", False, (0, 0, 0))
     count2=player_switch.render("2", False, (0, 0, 0))
     count1=player_switch.render("1", False, (0, 0, 0))
-    disp.blit(player_switch_display, (300, 100))
+    disp.blit(player_switch_display, (320, 100))
     pygame.display.update()
     pygame.time.delay(500)
     disp.blit(count3, (500,150))
@@ -628,14 +628,14 @@ def setupGamePlay1():
     pygame.time.delay(500)
 
     disp.fill((192, 192, 192))
-    player_turn_display=player_turn.render("PLAYER 1's TURN", False, (0, 0, 0))
+    player_turn_display=player_turn.render("Player 1's Turn", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
     toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
     track_toggle()
-    disp.blit(player_turn_display, (350, 0))
+    disp.blit(player_turn_display, (350, 100))
     disp.blit(toggle_display, (548,200))
     leftGrid = createRects(200, 200)
     rightGrid = createRects(500, 200)
@@ -660,7 +660,7 @@ def setupGamePlay2():
     count3=player_switch.render("3", False, (0, 0, 0))
     count2=player_switch.render("2", False, (0, 0, 0))
     count1=player_switch.render("1", False, (0, 0, 0))
-    disp.blit(player_switch_display, (300, 100))
+    disp.blit(player_switch_display, (320, 100))
     pygame.display.update()
     pygame.time.delay(500)
     disp.blit(count3, (500,150))
@@ -674,14 +674,14 @@ def setupGamePlay2():
     pygame.time.delay(500)
 
     disp.fill((192, 192, 192))
-    player_turn_display=player_turn.render("PLAYER 2's TURN", False, (0, 0, 0))
+    player_turn_display=player_turn.render("Player 2's Turn", False, (0, 0, 0))
     toggle = pygame.font.SysFont('Ariel', 20)
     toggle_display=toggle.render('  SHOW MY BOATS', False, (0, 0, 0))
     checkbox=pygame.draw.rect(disp, (255, 255, 255), (533, 200, 15, 15))
     toggled=False
     board_cleared=True
     track_toggle()
-    disp.blit(player_turn_display, (350, 0))
+    disp.blit(player_turn_display, (350, 100))
     disp.blit(toggle_display, (548,200))
     leftGrid = createRects(200, 200)
     rightGrid = createRects(500, 200)
@@ -696,7 +696,7 @@ def winState():
     largeText = pygame.font.Font('freesansbold.ttf',65)
     text = winner + " wins!"
     TextSurf, TextRect = text_objects(text, largeText)
-    TextRect.center = ((disp_width/2),(disp_height*.15))
+    TextRect.center = ((disp_width/2),(disp_height*.33))
     disp.blit(TextSurf, TextRect)
     pygame.display.update()
     gameState="winner"
