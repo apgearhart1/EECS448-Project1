@@ -158,16 +158,16 @@ def trackRects1(rects):
                     disp.blit(hit_text_display, (480, 540))
                     pygame.display.update()
                     print(rects_clicked1)
-                    print("destroyed", player2.shipsDestroyed())
+                    print("destroyed", player1.shipsDestroyed())
                     if player2.shipsDestroyed() == numberOfBoats:
                         winner = "Player 1"
                         gameState = "winner"
+                        winState()
                 elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked1: #clicked on a square and missed
                     rects_missed1.append((i,j))
                     rects_clicked1.append((i,j))
                     pygame.draw.rect(disp, (0, 0, 255), rects[i][j])
                     pygame.display.update(rects[i][j])
-                    print(rects_clicked1)
                     hit_text_display=hit_text.render("MISS!", False, (0, 0, 255))
                     disp.blit(hit_text_display, (480, 540))
                     pygame.display.update()
@@ -210,6 +210,11 @@ def trackRects2(rects):
                     disp.blit(hit_text_display, (480, 540))
                     pygame.display.update()
                     print(rects_clicked2)
+                    print("destroyed", player2.shipsDestroyed())
+                    if player1.shipsDestroyed() == numberOfBoats:
+                        winner = "Player 2"
+                        gameState = "winner"
+                        winState()
                 elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked2:
                     rects_missed2.append((i,j))
                     rects_clicked2.append((i,j))
@@ -586,7 +591,7 @@ def setupPlaceBoats(whichPlayer):
     grid = createRects(350, 200)
 
     pygame.display.update()
-    pygame.time.delay(500)
+    pygame.time.delay(200)
     gameState = "placeBoats" + str(whichPlayer)
 
 
@@ -694,6 +699,9 @@ def winState():
     TextRect.center = ((disp_width/2),(disp_height*.15))
     disp.blit(TextSurf, TextRect)
     pygame.display.update()
+    gameState="winner"
+
+
 
 if __name__ == "__main__":
     setupWelcome()
@@ -723,6 +731,10 @@ if __name__ == "__main__":
                 setupGamePlay1()
 
         elif gameState == "gamePlay1":
+            if player2.shipsDestroyed() == num_destroyed:
+                winner = "Player 1"
+                gameState = "winner"
+                winState()
             printRects1(leftGrid)
             printRects2(rightGrid)
             trackRects1(leftGrid)
@@ -734,11 +746,12 @@ if __name__ == "__main__":
                 clear_board(rightGrid)
                 rightGrid=createRects(500, 200)
                 board_cleared=True
+
+        elif gameState == "gamePlay2":
             if player1.shipsDestroyed() == num_destroyed:
                 winner = "Player 2"
                 gameState = "winner"
-
-        elif gameState == "gamePlay2":
+                winState()
             printRects2(leftGrid)
             printRects1(rightGrid)
             trackRects2(leftGrid)
@@ -750,9 +763,6 @@ if __name__ == "__main__":
                 clear_board(rightGrid)
                 rightGrid=createRects(500, 200)
                 board_cleared=True
-            if player2.shipsDestroyed() == num_destroyed:
-                winner = "Player 1"
-                gameState = "winner"
         elif gameState == "winner":
             winState()
         clock.tick(30)
