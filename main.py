@@ -137,7 +137,7 @@ def trackRects1(rects):
     newPress = True
     mouseX = 0
     mouseY = 0
-
+    hit_text=pygame.font.SysFont('Consolas', 40)
     if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
         newPress = False
         mouseX, mouseY = pygame.mouse.get_pos()
@@ -149,6 +149,13 @@ def trackRects1(rects):
                     rects_clicked1.append((i,j))
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
+                    hit_text_display=hit_text.render("HIT!", False, (255, 0, 0))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
+                    pygame.time.delay(500)
+                    hit_text_display=hit_text.render("HIT!", False, (192, 192, 192))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
                     print(rects_clicked1)
                     print("destroyed", player2.shipsDestroyed())
                     if player2.shipsDestroyed() == numberOfBoats:
@@ -160,9 +167,16 @@ def trackRects1(rects):
                     pygame.draw.rect(disp, (0, 0, 255), rects[i][j])
                     pygame.display.update(rects[i][j])
                     print(rects_clicked1)
-                    pygame.time.delay(250)
+                    hit_text_display=hit_text.render("MISS!", False, (0, 0, 255))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
+                    pygame.time.delay(500)
+                    hit_text_display=hit_text.render("MISS!", False, (192, 192, 192))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
+                    print(rects_clicked1)
                     setupGamePlay2()
-    
+
 
 
 def trackRects2(rects):
@@ -175,8 +189,7 @@ def trackRects2(rects):
     newPress = True
     mouseX = 0
     mouseY = 0
-
-
+    hit_text=pygame.font.SysFont('Consolas', 40)
     if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
         newPress = False
         mouseX, mouseY = pygame.mouse.get_pos()
@@ -188,16 +201,30 @@ def trackRects2(rects):
                     rects_clicked2.append((i,j))
                     pygame.draw.rect(disp, (255, 0, 0), rects[i][j])
                     pygame.display.update(rects[i][j])
+                    hit_text_display=hit_text.render("HIT!", False, (255, 0, 0))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
+                    pygame.time.delay(500)
+                    hit_text_display=hit_text.render("HIT!", False, (192, 192, 192))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
                     print(rects_clicked2)
                 elif isPointInRect(mouseX, mouseY, rects[i][j]) and not (i,j) in rects_clicked2:
                     rects_missed2.append((i,j))
                     rects_clicked2.append((i,j))
                     pygame.draw.rect(disp, (0, 0, 255), rects[i][j])
                     pygame.display.update(rects[i][j])
+                    hit_text_display=hit_text.render("MISS!", False, (255, 0, 0))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
+                    pygame.time.delay(500)
+                    hit_text_display=hit_text.render("MISS!", False, (192, 192, 192))
+                    disp.blit(hit_text_display, (480, 540))
+                    pygame.display.update()
                     print(rects_clicked2)
                     pygame.time.delay(250)
                     setupGamePlay1()
-    
+
 
     elif pygame.mouse.get_pressed() != (1, 0, 0):
         newPress = True
@@ -302,7 +329,7 @@ def trackPlacement(rects):
                 for i in range(len(B.getCoordinates())):
                     my_ships2.append(B.getCoordinates()[i])
                     opposing_ship1.append(B.getCoordinates()[i])
-                
+
         else:
             print("Error placing boat")
             for i in spotsToCheck:
