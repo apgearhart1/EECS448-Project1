@@ -299,8 +299,8 @@ def trackPlacement(rects):
     global my_ships2
     newPress = True
     mouseX = 0
-    mouseY = 0
 
+    mouseY = 0
     if pygame.mouse.get_pressed() == (1, 0, 0) and newPress:
         newPress = False
         mouseX, mouseY = pygame.mouse.get_pos()
@@ -470,8 +470,8 @@ def getSize():
     pygame.display.update()
 
 
-def trackQuitButton():
     """ Tracks if the Quit button on the welcome screen has been pressed. If it has, quitGame() is called"""
+def trackQuitButton():
 
     if pygame.mouse.get_pressed() == (1, 0, 0):
         mouseX, mouseY = pygame.mouse.get_pos()
@@ -575,8 +575,8 @@ def setupPlaceBoats(whichPlayer):
 
     placeNumber = 1
     spotsToCheck = []
-
     disp.fill((192, 192, 192))
+
     font = pygame.font.SysFont("Times New Roman", 40)
     text = font.render("Player " + str(whichPlayer) + ": " + "Place your " + str(numberOfBoats) + " boats", True, (0, 128, 0))
     disp.blit(text, (350, 100))
@@ -586,6 +586,7 @@ def setupPlaceBoats(whichPlayer):
     grid = createRects(350, 200)
 
     pygame.display.update()
+    pygame.time.delay(500)
     gameState = "placeBoats" + str(whichPlayer)
 
 
