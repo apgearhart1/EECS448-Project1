@@ -6,3 +6,12 @@
 *    Availability: https://pygame.org or https://github.com/pygame/pygame/
 *
 ***************************************************************************************/
+
+/***************************************************************************************
+*    Title: TextObjects() function
+*    Author: Unknown author but it was found from pythonprogramming.net
+*    Date: Unknown
+*    Code version: Uses Pygame 1.9.6
+*    Availability: https://pythonprogramming.net/pygame-start-menu-tutorial/
+*
+***************************************************************************************/
