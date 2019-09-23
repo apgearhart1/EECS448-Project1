@@ -133,6 +133,15 @@ class Player:
 		self.myBoard.populateBoard(self.shipList)
 	
 	def addToHitList(self, i, j):
+		"""Add's ship his to hit list 
+
+		Args:
+		i - x-coordinate of hit 
+		j - y-coordinate of hit 
+
+		Returns:
+		None
+		"""
 		for k in range(0, len(self.shipList)):
 			if (i,j) in self.shipList[k].getCoordinates():
 				self.shipList[k].hit((i,j))
