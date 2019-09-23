@@ -239,7 +239,7 @@ def trackRects2(rects):
                     rects_clicked2.append((i,j))
                     pygame.draw.rect(disp, (0, 0, 255), rects[i][j])
                     pygame.display.update(rects[i][j])
-                    hit_text_display=hit_text.render("MISS!", False, (255, 0, 0))
+                    hit_text_display=hit_text.render("MISS!", False, (0, 0, 255))
                     disp.blit(hit_text_display, (480, 540))
                     pygame.display.update()
                     pygame.time.delay(500)
@@ -593,11 +593,16 @@ def setupWelcome():
     disp.fill(l_blue)
     largeText = pygame.font.Font('freesansbold.ttf',65)
     TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
-    medText = pygame.font.Font('freesansbold.ttf', 48)
+    medText = pygame.font.Font('freesansbold.ttf', 42)
     smallText = pygame.font.Font('freesansbold.ttf', 36)
     TextSurf, TextRect = text_objects("Welcome to Battleboats", largeText)
-    TextSurf2, TextRect2 = text_objects("Play", medText)
-    TextSurf3, TextRect3 = text_objects("Quit", medText)
+
+    select_text=pygame.font.SysFont('Consolas', 26)
+    select_text_display=select_text.render("Select the number of boats", False, (0, 0, 0))
+    disp.blit(select_text_display, (375, disp_height*.25))
+
+    TextSurf2, TextRect2 = text_objects("PLAY", medText)
+    TextSurf3, TextRect3 = text_objects("QUIT", medText)
     TextRect.center = ((disp_width/2),(disp_height*.15))
     TextRect2.center = ((disp_width/2), (disp_height/2))
     TextRect3.center = ((disp_width/2), (disp_height*.75))
@@ -612,7 +617,7 @@ def setupWelcome():
         pygame.draw.rect(disp, l_blue ,(disp_width*.45,disp_height*.68,120,75))
         pygame.draw.rect(disp, black,(disp_width*.45,disp_height*.43,120,75),5)
         pygame.draw.rect(disp, black,(disp_width*.45,disp_height*.68,120,75),5)
-    TextRect.center = ((disp_width/2),(disp_height/4))
+    TextRect.center = ((disp_width/2),(disp_height/6))
     disp.blit(TextSurf, TextRect)
     disp.blit(TextSurf2, TextRect2)
     disp.blit(TextSurf3, TextRect3)
@@ -643,7 +648,7 @@ def setupPlaceBoats(whichPlayer):
     grid = createRects(350, 200)
 
     pygame.display.update()
-    pygame.time.delay(200)
+    pygame.time.delay(100)
     gameState = "placeBoats" + str(whichPlayer)
 
 
@@ -792,6 +797,25 @@ if __name__ == "__main__":
             printRects2(rightGrid)
             trackRects1(leftGrid)
             track_toggle()
+
+            sunk_text=pygame.font.SysFont('Consolas', 30)
+            sunk_text_display=sunk_text.render("Battleboats you've sunk:", False, (0, 0, 0))
+            disp.blit(sunk_text_display, (340, 590))
+            pygame.display.update()
+            largeText = pygame.font.Font('freesansbold.ttf',30)
+            i=0
+            for index in range(0,numberOfBoats):
+                if player2.getShip(index).checkDestroyed():
+                    num=largeText.render("1x"+str(index+1), False, (255,0,0))
+                    disp.blit(num, ((disp_width*.34 + i),(disp_height*.90)))
+                    pygame.display.update()
+                else:
+                    destroyed_num=largeText.render("1x"+str(index+1), False, (255,255,255))
+                    disp.blit(destroyed_num, ((disp_width*.34 + i),(disp_height*.90)))
+                    pygame.display.update()
+                i=i+87
+
+
             if toggled and board_cleared:
                 showboat1(rightGrid)
                 board_cleared=False
@@ -809,6 +833,24 @@ if __name__ == "__main__":
             printRects1(rightGrid)
             trackRects2(leftGrid)
             track_toggle()
+
+            sunk_text=pygame.font.SysFont('Consolas', 30)
+            sunk_text_display=sunk_text.render("Battleboats you've sunk:", False, (0, 0, 0))
+            disp.blit(sunk_text_display, (340, 590))
+            pygame.display.update()
+            largeText = pygame.font.Font('freesansbold.ttf',30)
+            i=0
+            for index in range(0,numberOfBoats):
+                if player1.getShip(index).checkDestroyed():
+                    num=largeText.render("1x"+str(index+1), False, (255,0,0))
+                    disp.blit(num, ((disp_width*.34 + i),(disp_height*.90)))
+                    pygame.display.update()
+                else:
+                    destroyed_num=largeText.render("1x"+str(index+1), False, (255,255,255))
+                    disp.blit(destroyed_num, ((disp_width*.34 + i),(disp_height*.90)))
+                    pygame.display.update()
+                i=i+87
+
             if toggled and board_cleared:
                 showboat2(rightGrid)
                 board_cleared=False
