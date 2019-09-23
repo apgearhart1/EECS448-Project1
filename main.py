@@ -17,7 +17,6 @@ if __name__ == "__main__":
     draw_once=True
     gameState = "welcome"
     winner = "null"
-    numberOfBoats = 4
     num_destroyed = 0
     numberOfBoats = 0
     player1 = Player()
@@ -364,10 +363,10 @@ def trackPlacement(rects):
         for i in range(len(spotsToCheck)):
             if spotsToCheck[i] in player1.getCoordinateList() and turn%2 ==0:
                 overlap = True
-                replace.append(spotsToCheck[i]) 
+                replace.append(spotsToCheck[i])
             elif spotsToCheck[i] in player2.getCoordinateList() and turn%2 != 0:
                 overlap = True
-                replace.append(spotsToCheck[i]) 
+                replace.append(spotsToCheck[i])
 
         if B.validPlace(spotsToCheck) and overlap == False:
             print("Boat Placed")
@@ -544,11 +543,12 @@ def updateBoatToPlaceText(size):
     """
 
     disp.fill((192, 192, 192), (350, 150, 200, 40))
+    pygame.draw.rect(disp, (192,192,192) ,(570, 150, 50, 50))
     pygame.display.update((350, 150, 200, 40))
     font = pygame.font.SysFont("Times New Roman", 30)
     text = font.render("Boat size to place: " + str(size), True, (0, 0, 0))
     disp.blit(text, (350, 150))
-    pygame.display.update((350, 150, 200, 40))
+    pygame.display.update()
 
 def showSwitchPlayers(originalTime):
     """ Displays the screen that tells players to switch. Gives players three seconds to do so.
